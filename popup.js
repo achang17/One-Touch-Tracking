@@ -70,7 +70,8 @@ function savePackageData(packageName, shippingData) {
  * 
  * @param {Object} jsonData data with tracking number to use
  */
-function makeListRequest(jsonData) {
+function makeListRequest(trackNum) {
+    var jsonData = getUpsRequest(trackNum);
     const corsproxy = "https://cors-anywhere.herokuapp.com/";
     const testurl = "https://wwwcie.ups.com/rest/Track";
     const produrl = "https://onlinetools.ups.com/rest/Track";
@@ -93,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
     var listbtn = document.getElementById('listData');
 
     listbtn.addEventListener('click', () => {
-        var upsRequest = getUpsRequest("1Z12345E1305277940");
-        makeListRequest(upsRequest);
+        makeListRequest("1Z12345E1305277940");
     });
 });
