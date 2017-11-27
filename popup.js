@@ -48,10 +48,10 @@ function makeListRequest(jsonData) {
     httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             console.log(httpRequest.status);
-            const response = JSON.parse(httpRequest.response)
-            console.log(response);
-            savePackageData("TestPackage", response.TrackResponse.Shipment);
-            logPickup("TestPackage", response.TrackResponse.Shipment);
+            const data = (JSON.parse(httpRequest.response)).TrackResponse
+            console.log(data);
+            savePackageData("TestPackage", data.Shipment);
+            logPickup("TestPackage", data.Shipment);
         }   
     };
     httpRequest.open("POST", corsproxy + testurl);
