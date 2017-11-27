@@ -1,3 +1,8 @@
+/**
+ * Forms JSON data to use in HTTP Request to UPS API using given tracking number
+ * 
+ * @param {string} trackNum package tracking number to use
+ */
 function getUpsRequest(trackNum) {
     return {
         "UPSSecurity": {
@@ -22,6 +27,12 @@ function getUpsRequest(trackNum) {
     }
 }
 
+/**
+ * Function for testing that logs date to check if data is accessed properly
+ * 
+ * @param {string} packageName name of package for which shipping date should be printed
+ * @param {Object} shippingData data to look through for date
+ */
 function logPickup(packageName, shippingData) {
     const date = shippingData.PickupDate;
     var month = date.substring(4,6),
@@ -30,16 +41,35 @@ function logPickup(packageName, shippingData) {
     console.log(packageName + ' due for pickup on ' + month + '/' + day + '/' + year);
 }
 
-function getPackageData(packageName) {
-    
+/**
+ * Gets data for given package name
+ * 
+ * @param {string} packageName name of package for which data should be retrieved
+ * @param {function(shippingData)} callback function that uses shipping data of given package
+ */
+function getPackageData(packageName, callback) {
+    chrome.storage.sync.get(packageName, (items) => {
+        callback(chrome.runtime.lastError() ? null : items[packageName]);
+    });
 }
 
+/**
+ * Saves shipping data given for the specified package name
+ * 
+ * @param {string} packageName name of package to save with given data
+ * @param {Object} shippingData given data to save
+ */
 function savePackageData(packageName, shippingData) {
     var items = {};
     items[packageName] = shippingData; // saves data as val for the key packageName
     chrome.storage.sync.set(items);
 }
 
+/**
+ * Makes actual request to UPS API with given data containing tracking number
+ * 
+ * @param {Object} jsonData data with tracking number to use
+ */
 function makeListRequest(jsonData) {
     const corsproxy = "https://cors-anywhere.herokuapp.com/";
     const testurl = "https://wwwcie.ups.com/rest/Track";
@@ -52,7 +82,7 @@ function makeListRequest(jsonData) {
             console.log(data);
             savePackageData("TestPackage", data.Shipment);
             logPickup("TestPackage", data.Shipment);
-        }   
+        }
     };
     httpRequest.open("POST", corsproxy + testurl);
     httpRequest.setRequestHeader("Content-Type", "application/json");
