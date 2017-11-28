@@ -91,6 +91,12 @@ function constructDataDiv(packageName) {
     return datdiv;
 }
 
+/**
+ * Tries to get the saved data for the package after the data
+ * from the API call has been saved
+ * 
+ * @param {string} packageName name of package for which to get data
+ */
 function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
@@ -102,6 +108,11 @@ function tryDisplayData(packageName) {
     });
 }
 
+/**
+ * Builds all HTML components for the package and inserts into DOM
+ * 
+ * @param {string} packageName 
+ */
 function makePackageHtml(packageName) {
     // Make individual components of package DOM items
     var pkgdiv = constructPkgDiv(packageName);
