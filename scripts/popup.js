@@ -67,7 +67,6 @@ function makeListRequest(packageName, trackNum) {
             console.log(httpRequest.status);
             const data = (JSON.parse(httpRequest.response)).TrackResponse            
             data.Shipment['TrackingNumber'] = trackNum;
-            data.Shipment['PackageName'] = packageName;
             console.log(data.Shipment);
             saveShippingData(packageName, data.Shipment);
         }
