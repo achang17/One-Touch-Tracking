@@ -43,3 +43,12 @@ function getLocation(shippingData, all) {
         }
     }
 }
+
+/**
+ * Gets tracking number
+ * 
+ * @param {Object} shippingData data from which to return number
+ */
+function getTrackingNumber(shippingData) {
+    return shippingData.TrackingNumber;
+}

@@ -18,6 +18,7 @@ function logAll(shippingData) {
     logPickup(shippingData);
     logLatestLocation(shippingData);
     logAllLocations(shippingData);
+    logTrackingNum(shippingData);
 }
 
 /**
@@ -52,4 +53,8 @@ function logAllLocations(shippingData) {
     for(var i = 0; i < locations.length; i++) {
         console.log(locations[i].fullLocation);
     }
+}
+
+function logTrackingNum(shippingData) {
+    console.log('Tracking Number is ' + getTrackingNumber(shippingData));
 }
