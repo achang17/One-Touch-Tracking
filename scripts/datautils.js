@@ -15,12 +15,26 @@ function parseDate(shippingData) {
 }
 
 /**
+ * Gets object for latest Activity regardless of status
+ * 
+ * @param {Object} shippingData data from wich activity will be obtained
+ */
+function getLatestActivity(shippingData) {
+    if(shippingData.Activity === undefined) {
+        return shippingData.Package.Activity
+    }
+    else {
+        return shippingData.Activity;
+    }
+}
+
+/**
  * Gets latest location 
  * 
  * @param {Object} shippingData data from which location will be collected
  */
 function getLocation(shippingData, all) {
-    if(all === "all") {
+    if(all === "all" && shippingData.Activity !== undefined) {
         const allActivity = shippingData.Activity;
         var locationList = [];
         for(var i = 0; i < allActivity.length; i++) {
@@ -35,11 +49,19 @@ function getLocation(shippingData, all) {
         return locationList;
     }
     else {
-        const latestLocation = shippingData.Activity[shippingData.Activity.length - 1].ActivityLocation;
-        return {
-            fullLocation: latestLocation.City + ', ' + latestLocation.StateProvinceCode,
-            mapsUrl: 'https://www.google.com/maps/place/' + latestLocation.City 
-                   + ',+' + latestLocation.StateProvinceCode + '/'
+        const latestLocation = getLatestActivity(shippingData).ActivityLocation;
+        if(latestLocation.CountryCode === undefined) {
+            return {
+                fullLocation: latestLocation.City + ', ' + latestLocation.StateProvinceCode,
+                mapsUrl: 'https://www.google.com/maps/place/' + latestLocation.City 
+                       + ',+' + latestLocation.StateProvinceCode + '/'
+            }
+        }
+        else {
+            return {
+                fullLocation: latestLocation.CountryCode,
+                mapsUrl: 'https://www.google.com/maps/place/' + latestLocation.CountryCode + '/'
+            }
         }
     }
 }
@@ -52,3 +74,11 @@ function getLocation(shippingData, all) {
 function getTrackingNumber(shippingData) {
     return shippingData.TrackingNumber;
 }
+
+// function interpretProgress(shippingData) {
+
+// }
+
+// function getProgress(shippingData) {
+
+// }

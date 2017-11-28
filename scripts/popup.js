@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
     var mapsbtn = document.getElementById('showMaps');
 
     listbtn.addEventListener('click', () => {
-        makeListRequest("990728071");
+        makeListRequest("1Z648616E192760718");
         showLogDiv();
     });
 
