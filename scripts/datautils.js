@@ -10,7 +10,8 @@ function parseDate(shippingData) {
     return {
         month: month,
         day: day,
-        year: year
+        year: year,
+        fullString: month + '/' + day + '/' + year
     }
 }
 

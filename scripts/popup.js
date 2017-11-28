@@ -67,6 +67,7 @@ function makeListRequest(packageName, trackNum) {
             console.log(httpRequest.status);
             const data = (JSON.parse(httpRequest.response)).TrackResponse            
             data.Shipment['TrackingNumber'] = trackNum;
+            data.Shipment['PackageName'] = packageName;
             console.log(data.Shipment);
             saveShippingData(packageName, data.Shipment);
         }
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         var packageName = evt.target.elements.packageName.value;
         var trackNum = evt.target.elements.trackNum.value;
         addPackage(packageName, trackNum);
+        addform.reset();
     });
 });
 

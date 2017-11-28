@@ -36,7 +36,7 @@ function logAll(shippingData) {
  */
 function logPickup(shippingData) {
     var date = parseDate(shippingData);
-    console.log('Package is due for pickup on ' + date.month + '/' + date.day + '/' + date.year);
+    console.log('Package is due for pickup on ' + date.fullString);
 }
 
 function logLatestActivity(shippingData) {

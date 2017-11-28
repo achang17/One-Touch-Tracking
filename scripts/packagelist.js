@@ -5,6 +5,10 @@ Element.prototype.remove = function () {
     this.parentElement.removeChild(this);
 }
 
+function formatPackageName(packageName) {
+    return packageName.replace(' ', '_');
+}
+
 /**
  * Constructs HTML div for the added package. Div will wrap buttons and package name
  * 
@@ -44,7 +48,7 @@ function constructLogButton(packageName) {
     logbtn.setAttribute('type', "button");
     logbtn.setAttribute('value', "Show Logs");
     logbtn.addEventListener('click', () => {
-        var shippingData = getShippingData(packageName, logAll);
+        getShippingData(packageName, logAll);
     });
     return logbtn;
 }
@@ -68,6 +72,11 @@ function constructMapsButton(packageName) {
     return mapbtn;
 }
 
+/**
+ * Construct input button for removing the package from storage and the DOM
+ * 
+ * @param {string} packageName name to append to ID tags
+ */
 function constructRmvButton(packageName) {
     var rmvbtn = document.createElement('input');
     rmvbtn.id = packageName + 'Remove';
@@ -79,6 +88,27 @@ function constructRmvButton(packageName) {
     return rmvbtn;
 }
 
+/**
+ * Construct div in which data will be shown in DOM when logged
+ * 
+ * @param {string} packageName name to append to ID tags
+ */
+function constructDataDiv(packageName) {
+    var datdiv = document.createElement('div');
+    datdiv.id = packageName + 'Data';
+    getShippingData(packageName, (shippingData) => {
+        datdiv.innerHTML += '<p>Date: ' + parseDate(shippingData).fullString + '</p>';
+        datdiv.innerHTML += '<p>Location: ' + getLocation(shippingData).fullLocation + '</p>';
+        datdiv.innerHTML += '<p>Tracking Number: ' + getTrackingNumber(shippingData) + '</p>';
+    });
+    return datdiv;
+}
+
+/**
+ * Adds given element to DOM in designated div
+ * 
+ * @param {Element} element element to add to outdiv
+ */
 function addToView(element) {
     var outdiv = document.getElementById('outdiv');
     outdiv.appendChild(element);
@@ -92,13 +122,18 @@ function addToView(element) {
  * @param {string} trackNum tracking number for new package
  */
 function addPackage(packageName, trackNum) {
+    if(packageName.includes(' ')) {
+        packageName = formatPackageName(packageName);
+    }
     makeListRequest(packageName, trackNum);     // UPS API call to get tracking data
     var pkgdiv = constructPkgDiv(packageName);
     var btndiv = constructBtnDiv(packageName);
     var logbtn = constructLogButton(packageName);
     var mapbtn = constructMapsButton(packageName);
     var rmvbtn = constructRmvButton(packageName);
+    var datdiv = constructDataDiv(packageName);
     pkgdiv.appendChild(btndiv);
+    pkgdiv.appendChild(datdiv);
     btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
