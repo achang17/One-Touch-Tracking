@@ -96,11 +96,6 @@ function constructRmvButton(packageName) {
 function constructDataDiv(packageName) {
     var datdiv = document.createElement('div');
     datdiv.id = packageName + 'Data';
-    getShippingData(packageName, (shippingData) => {
-        datdiv.innerHTML += '<p>Date: ' + parseDate(shippingData).fullString + '</p>';
-        datdiv.innerHTML += '<p>Location: ' + getLocation(shippingData).fullLocation + '</p>';
-        datdiv.innerHTML += '<p>Tracking Number: ' + getTrackingNumber(shippingData) + '</p>';
-    });
     return datdiv;
 }
 
@@ -112,6 +107,26 @@ function constructDataDiv(packageName) {
 function addToView(element) {
     var outdiv = document.getElementById('outdiv');
     outdiv.appendChild(element);
+}
+
+function afterLoad(elemId, callback) {
+    var elem = document.getElementById(elemId);
+    if(elem !== undefined) {
+        callback(elem);
+    }
+    else {
+        setTimeout(afterLoad(elemId, callback), 50);
+    }
+}
+
+function tryDisplayData(packageName) {
+    afterLoad(packageName + 'Data', (datdiv) => {
+        getShippingData(packageName, (shippingData) => {
+            datdiv.innerHTML += '<p>Date: ' + parseDate(shippingData).fullString + '</p>';
+            datdiv.innerHTML += '<p>Location: ' + getLocation(shippingData).fullLocation + '</p>';
+            datdiv.innerHTML += '<p>Tracking Number: ' + getTrackingNumber(shippingData) + '</p>';
+        });
+    });
 }
 
 /**
@@ -138,6 +153,7 @@ function addPackage(packageName, trackNum) {
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
     addToView(pkgdiv);
+    tryDisplayData(packageName);
 }
 
 /**

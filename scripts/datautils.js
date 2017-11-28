@@ -34,15 +34,19 @@ function getLatestActivity(shippingData) {
  * 
  * @param {string} location location string to trim
  */
-function trimLocation(location) {
-    var outstr;
-    if(location.includes('undefined, ')) {
-        outstr = location.replace('undefined, ', ''); // removes intermediate "undefined" labels
+function trimLocation(locationStr) {
+    var outStr = locationStr
+    if(outStr.includes('undefined, ')) {
+        outStr = outStr.replace(/undefined, /, ''); // removes intermediate "undefined" labels
     }
-    else if(location.endsWith('undefined')) {
-        outstr = location.slice(0, -11); // removes undefined + preceding , (", undefined")
+    else if(locationStr.endsWith('undefined')) {
+        outStr = outStr.replace(/undefined/, ''); // removes undefined + preceding , (", undefined")
     }
-    return outstr;
+    return outStr;
+}
+
+function formatForUrl(locationStr) {
+    return locationStr.replace(/ /g, '+');
 }
 
 /**
@@ -52,26 +56,18 @@ function trimLocation(location) {
  */
 function getLocation(shippingData) {
     const latestLocation = getLatestActivity(shippingData).ActivityLocation;
-    var addrObj;
-    if (latestLocation.Address === undefined) {
-        addrObj =  {
-            fullLocation: latestLocation.City + ', ' 
-                        + latestLocation.StateProvinceCode + ', '
-                        + latestLocation.CountryCode,
-            mapsUrl: 'https://www.google.com/maps/place/' + latestLocation.City
-                + ',+' + latestLocation.StateProvinceCode + '/'
-        }
+    console.log(latestLocation);
+    var locationStr = latestLocation.Address === undefined ? 
+        latestLocation.City + ', ' + latestLocation.StateProvinceCode + ', '+ latestLocation.CountryCode :
+        locationStr = latestLocation.Address.City + ', ' + latestLocation.Address.StateProvinceCode + ', ' + latestLocation.Address.CountryCode
+    console.log('LOCATION STR:' + locationStr);
+    var addrObj =  {
+        fullLocation: trimLocation(locationStr),
+        mapsUrl: 'https://www.google.com/maps/place/' + formatForUrl(locationStr) + '/'
     }
-    else {
-        addrObj = {
-            fullLocation: latestLocation.Address.City + ', ' 
-            + latestLocation.Address.StateProvinceCode + ', '
-            + latestLocation.Address.CountryCode,
-            mapsUrl: 'https://www.google.com/maps/place/'
-        }
-    }
-    addrObj.fullLocation = trimLocation(addrObj.fullLocation);
-    addrObj.mapsUrl += addrObj.fullLocation.replace(', ', ',+') + '/';
+    console.log(addrObj);
+    console.log(addrObj.fullLocation);
+    console.log(addrObj.mapsUrl);
     return addrObj;
 }
 
