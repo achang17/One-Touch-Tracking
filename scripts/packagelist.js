@@ -68,6 +68,17 @@ function constructMapsButton(packageName) {
     return mapbtn;
 }
 
+function constructRmvButton(packageName) {
+    var rmvbtn = document.createElement('input');
+    rmvbtn.id = packageName + 'Remove';
+    rmvbtn.setAttribute('type', "button");
+    rmvbtn.setAttribute('value', "Remove Package")
+    rmvbtn.addEventListener('click', () => {
+        removePackage(packageName);
+    });
+    return rmvbtn;
+}
+
 function addToView(element) {
     var outdiv = document.getElementById('outdiv');
     outdiv.appendChild(element);
@@ -86,9 +97,11 @@ function addPackage(packageName, trackNum) {
     var btndiv = constructBtnDiv(packageName);
     var logbtn = constructLogButton(packageName);
     var mapbtn = constructMapsButton(packageName);
+    var rmvbtn = constructRmvButton(packageName);
     pkgdiv.appendChild(btndiv);
     btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
+    btndiv.appendChild(rmvbtn);
     addToView(pkgdiv);
 }
 
@@ -101,5 +114,6 @@ function addPackage(packageName, trackNum) {
 function removePackage(packageName) {
     chrome.storage.sync.remove(packageName, () => {     // remove from storage
         document.getElementById(packageName).remove(); // remove div
+        console.log('Removed ' + packageName);
     });
 }
