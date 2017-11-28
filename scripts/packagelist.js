@@ -1,3 +1,8 @@
+/**
+ * Removes spaces from package name. Open to further formatting
+ * 
+ * @param {string} packageName package name to format
+ */
 function formatPackageName(packageName) {
     return packageName.replace(/ /g, '_');
 }
