@@ -1,11 +1,9 @@
 // HTML MODIFICATION
 
-function showLogDiv() {
-    var div = document.getElementById('logs');
+function showLogDiv(btnName) {
+    var div = document.getElementById(btnName + 'Logs');
     div.className = 'shown';
 }
-
-
 
 // DATA LOGGING
 
@@ -16,8 +14,8 @@ function showLogDiv() {
  */
 function logAll(shippingData) {
     logPickup(shippingData);
+    logLatestActivity(shippingData);
     logLatestLocation(shippingData);
-    logAllLocations(shippingData);
     logTrackingNum(shippingData);
 }
 
@@ -32,6 +30,13 @@ function logPickup(shippingData) {
     console.log('Package is due for pickup on ' + date.month + '/' + date.day + '/' + date.year);
 }
 
+function logLatestActivity(shippingData) {
+    console.log('Activity: ');
+    console.log(getLatestActivity(shippingData));
+    // console.log('Location: ');
+    // console.log(getLatestActivity(shippingData).ActivityLocation.Address);
+}
+
 /**
  * Function for testing that logs latest location to check if data is accessed properly
  * 
@@ -40,19 +45,6 @@ function logPickup(shippingData) {
 function logLatestLocation(shippingData) {
     var latestLocation = getLocation(shippingData);
     console.log('Latest Location was ' + latestLocation.fullLocation);
-}
-
-/**
- * Function for testing that logs all locations to check if data is returned properly
- * 
- * @param {Object} shippingData data to look through for activity
- */
-function logAllLocations(shippingData) {
-    var locations = getLocation(shippingData, "all");
-    console.log('Package has been to ');
-    for(var i = 0; i < locations.length; i++) {
-        console.log(locations[i].fullLocation);
-    }
 }
 
 function logTrackingNum(shippingData) {

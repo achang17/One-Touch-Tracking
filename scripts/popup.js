@@ -58,7 +58,7 @@ function saveShippingData(packageName, shippingData) {
  * 
  * @param {Object} jsonData data with tracking number to use
  */
-function makeListRequest(trackNum) {
+function makeListRequest(packageName, trackNum) {
     var jsonData = getUpsRequest(trackNum);
     const corsproxy = "https://cors-anywhere.herokuapp.com/";
     const testurl = "https://wwwcie.ups.com/rest/Track";
@@ -69,8 +69,8 @@ function makeListRequest(trackNum) {
             console.log(httpRequest.status);
             const data = (JSON.parse(httpRequest.response)).TrackResponse            
             data.Shipment['TrackingNumber'] = trackNum;
-            console.log(data);
-            saveShippingData("TestPackage", data.Shipment);
+            console.log(data.Shipment);
+            saveShippingData(packageName, data.Shipment);
         }
     };
     httpRequest.open("POST", corsproxy + testurl);
@@ -78,22 +78,49 @@ function makeListRequest(trackNum) {
     httpRequest.send(JSON.stringify(jsonData));
 }
 
+function deliveredRequest() {
+    makeListRequest("Delivered", "1Z12345E6605272234");
+}
+
+function inTransitRequest() {
+    makeListRequest("inTransit", "990728071");
+}
+
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
-    var listbtn = document.getElementById('listData');
-    var showbtn = document.getElementById('showLogs');
-    var mapsbtn = document.getElementById('showMaps');
+    var delibtn = document.getElementById('deliData');
+    var intrbtn = document.getElementById('intrData');
+    var dlogbtn = document.getElementById('deliLogs');
+    var ilogbtn = document.getElementById('intrLogs');
+    var dmapbtn = document.getElementById('deliMaps');
+    var imapbtn = document.getElementById('intrMaps');
 
-    listbtn.addEventListener('click', () => {
-        makeListRequest("1Z648616E192760718");
-        showLogDiv();
+    delibtn.addEventListener('click', () => {
+        deliveredRequest();
+        showLogDiv('deli');
     });
 
-    showbtn.addEventListener('click', () => {
-        var shippingData = getShippingData("TestPackage", logAll);
+    intrbtn.addEventListener('click', () => {
+        inTransitRequest();
+        showLogDiv('intr');
     });
 
-    mapsbtn.addEventListener('click', () => {
-        getShippingData("TestPackage", function(shippingData) {
+    dlogbtn.addEventListener('click', () => {
+        var shippingData = getShippingData("Delivered", logAll);
+    });
+
+    dmapbtn.addEventListener('click', () => {
+        getShippingData("Delivered", function(shippingData) {
+            var location = getLocation(shippingData);
+            chrome.tabs.create({url: location.mapsUrl});
+        });
+    });
+
+    ilogbtn.addEventListener('click', () => {
+        var shippingData = getShippingData("inTransit", logAll);
+    });
+
+    imapbtn.addEventListener('click', () => {
+        getShippingData("inTransit", function(shippingData) {
             var location = getLocation(shippingData);
             chrome.tabs.create({url: location.mapsUrl});
         });

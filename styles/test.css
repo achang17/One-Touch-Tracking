@@ -6,12 +6,20 @@
     display: block;
 }
 
-#logs {
-    margin-top: 25px;
-}
-
 .buttonline {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+#logs {
+    margin-top: 25px;
+}
+
+#deliLogs {
+    margin-left: 10px;
+}
+
+#intrLogs {
+    margin-left: 10px;
 }
