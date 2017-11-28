@@ -35,7 +35,7 @@ function getUpsRequest(trackNum) {
  * @param {string} packageName name of package for which data should be retrieved
  * @param {function(shippingData)} callback function that uses shipping data of given package
  */
-function getPackageData(packageName, callback) {
+function getShippingData(packageName, callback) {
     chrome.storage.sync.get(packageName, (items) => {
         callback(chrome.runtime.lastError ? null : items[packageName]);
     });
@@ -47,7 +47,7 @@ function getPackageData(packageName, callback) {
  * @param {string} packageName name of package to save with given data
  * @param {Object} shippingData given data to save
  */
-function savePackageData(packageName, shippingData) {
+function saveShippingData(packageName, shippingData) {
     var items = {};
     items[packageName] = shippingData; // saves data as val for the key packageName
     chrome.storage.sync.set(items);
@@ -69,7 +69,7 @@ function makeListRequest(trackNum) {
             console.log(httpRequest.status);
             const data = (JSON.parse(httpRequest.response)).TrackResponse
             console.log(data);
-            savePackageData("TestPackage", data.Shipment);
+            saveShippingData("TestPackage", data.Shipment);
         }
     };
     httpRequest.open("POST", corsproxy + testurl);
@@ -80,6 +80,7 @@ function makeListRequest(trackNum) {
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var listbtn = document.getElementById('listData');
     var showbtn = document.getElementById('showLogs');
+    var mapsbtn = document.getElementById('showMaps');
 
     listbtn.addEventListener('click', () => {
         makeListRequest("990728071");
@@ -87,6 +88,13 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
     });
 
     showbtn.addEventListener('click', () => {
-        var shippingData = getPackageData("TestPackage", logAll);
+        var shippingData = getShippingData("TestPackage", logAll);
+    });
+
+    mapsbtn.addEventListener('click', () => {
+        getShippingData("TestPackage", function(shippingData) {
+            var location = getLocation(shippingData);
+            chrome.tabs.create({url: location.mapsUrl});
+        });
     });
 });
