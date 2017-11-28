@@ -111,7 +111,7 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
-            datdiv.innerHTML += '<p>Date: ' + shippingData.date.fullDate + '</p>';
+            datdiv.innerHTML += '<p>Date Picked Up: ' + shippingData.date.fullDate + '</p>';
             datdiv.innerHTML += '<p>Location: ' + shippingData.latestLocation.fullLocation + '</p>';
             datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
         });
