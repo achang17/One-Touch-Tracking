@@ -76,10 +76,9 @@ function makeListRequest(packageName, trackNum) {
     httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             console.log('Status: ' + httpRequest.status);
-            const data = (JSON.parse(httpRequest.response)).TrackResponse            
-            data.Shipment['TrackingNumber'] = trackNum;
+            const data = (JSON.parse(httpRequest.response)).TrackResponse;
             console.log(data.Shipment);
-            const reducedData = parseShippingData(packageName, data.Shipment);
+            const reducedData = parseShippingData(packageName, trackNum, data.Shipment);
             console.log(reducedData)
             saveShippingData(packageName, reducedData);
         }
