@@ -24,7 +24,6 @@ function logShippingData(shippingData) {
 function logAll(shippingData) {
     logPackageName(shippingData);
     logPickupDate(shippingData);
-    logLatestActivity(shippingData);
     logLatestLocation(shippingData);
     logTrackingNum(shippingData);
 }
@@ -42,13 +41,6 @@ function logPackageName(shippingData) {
 function logPickupDate(shippingData) {
     var date = shippingData.date;
     console.log('Package is due for pickup on ' + date.fullDate);
-}
-
-function logLatestActivity(shippingData) {
-    console.log('Activity: ');
-    console.log(shippingData.latestActivity);
-    // console.log('Location: ');
-    // console.log(getLatestActivity(shippingData).ActivityLocation.Address);
 }
 
 /**
