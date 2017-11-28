@@ -1,9 +1,24 @@
 /**
+ * Parses shipping data from API and reduces it to necessary parts
+ * 
+ * @param {Object} shippingData whole object from response to parse
+ */
+function parseShippingData(packageName, shippingData) {
+    return {
+        packageName: packageName,
+        date: getDate(shippingData),
+        latestActivity: getLatestActivity(shippingData),
+        latestLocation: getLocation(shippingData),
+        trackingNumber: getTrackingNumber(shippingData)
+    };
+}
+
+/**
  * Parses date given in data and returns object with separate month day and year
  * 
  * @param {Object} shippingData data from which date will be obtained
  */
-function parseDate(shippingData) {
+function getDate(shippingData) {
     var month = shippingData.PickupDate.substring(4, 6),
         day = shippingData.PickupDate.substring(6, 8),
         year = shippingData.PickupDate.substring(0, 4);
@@ -11,7 +26,7 @@ function parseDate(shippingData) {
         month: month,
         day: day,
         year: year,
-        fullString: month + '/' + day + '/' + year
+        fullDate: month + '/' + day + '/' + year
     }
 }
 
@@ -21,11 +36,13 @@ function parseDate(shippingData) {
  * @param {Object} shippingData data from wich activity will be obtained
  */
 function getLatestActivity(shippingData) {
-    if (shippingData.Package !== undefined) {
-        return shippingData.Package.Activity
+    const latestActivity = shippingData.Package !== undefined ? shippingData.Package.Activity : 
+                           shippingData.Activity[shippingData.Activity.length - 1];
+    if(Array.isArray(latestActivity)) {
+        return latestActivity[latestActivity.length - 1];
     }
     else {
-        return shippingData.Activity[shippingData.Activity.length - 1];
+        return latestActivity;
     }
 }
 
@@ -37,10 +54,10 @@ function getLatestActivity(shippingData) {
 function trimLocation(locationStr) {
     var outStr = locationStr
     if(outStr.includes('undefined, ')) {
-        outStr = outStr.replace(/undefined, /, ''); // removes intermediate "undefined" labels
+        outStr = outStr.replace(/undefined, /g, ''); // removes intermediate "undefined" labels
     }
-    else if(locationStr.endsWith('undefined')) {
-        outStr = outStr.replace(/undefined/, ''); // removes undefined + preceding , (", undefined")
+    if(locationStr.endsWith('undefined')) {
+        outStr = outStr.replace(/undefined/g, ''); // removes undefined + preceding , (", undefined")
     }
     return outStr;
 }

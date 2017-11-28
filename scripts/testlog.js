@@ -22,10 +22,15 @@ function logShippingData(shippingData) {
  * @param {Object} shippingData data to use for logging
  */
 function logAll(shippingData) {
-    logPickup(shippingData);
+    logPackageName(shippingData);
+    logPickupDate(shippingData);
     logLatestActivity(shippingData);
     logLatestLocation(shippingData);
     logTrackingNum(shippingData);
+}
+
+function logPackageName(shippingData) {
+    console.log('Package name is ' + shippingData.packageName);
 }
 
 /**
@@ -34,14 +39,14 @@ function logAll(shippingData) {
  * @param {string} packageName name of package for which shipping date should be printed
  * @param {Object} shippingData data to look through for date
  */
-function logPickup(shippingData) {
-    var date = parseDate(shippingData);
-    console.log('Package is due for pickup on ' + date.fullString);
+function logPickupDate(shippingData) {
+    var date = shippingData.date;
+    console.log('Package is due for pickup on ' + date.fullDate);
 }
 
 function logLatestActivity(shippingData) {
     console.log('Activity: ');
-    console.log(getLatestActivity(shippingData));
+    console.log(shippingData.latestActivity);
     // console.log('Location: ');
     // console.log(getLatestActivity(shippingData).ActivityLocation.Address);
 }
@@ -52,10 +57,9 @@ function logLatestActivity(shippingData) {
  * @param {Object} shippingData data to look through for activity
  */
 function logLatestLocation(shippingData) {
-    var latestLocation = getLocation(shippingData);
-    console.log('Latest Location was ' + latestLocation.fullLocation);
+    console.log('Latest Location was ' + shippingData.latestLocation.fullLocation);
 }
 
 function logTrackingNum(shippingData) {
-    console.log('Tracking Number is ' + getTrackingNumber(shippingData));
+    console.log('Tracking Number is ' + shippingData.trackingNumber);
 }

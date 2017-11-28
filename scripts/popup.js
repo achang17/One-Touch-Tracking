@@ -51,6 +51,17 @@ function saveShippingData(packageName, shippingData) {
     chrome.storage.sync.set(items);
 }
 
+function getAfterSave(packageName, callback) {
+    chrome.storage.sync.get(packageName, (items) => {
+        if(items !== undefined) {   // check if item has been saved
+            callback(chrome.runtime.lastError ? null : items[packageName]);
+        }
+        else { // Try again after short wait
+            setTimeout(getAfterSave(packageName, callback), 50);
+        }
+    });
+}
+
 /**
  * Makes actual request to UPS API with given data containing tracking number
  * 
@@ -64,11 +75,13 @@ function makeListRequest(packageName, trackNum) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function() {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
-            console.log(httpRequest.status);
+            console.log('Status: ' + httpRequest.status);
             const data = (JSON.parse(httpRequest.response)).TrackResponse            
             data.Shipment['TrackingNumber'] = trackNum;
             console.log(data.Shipment);
-            saveShippingData(packageName, data.Shipment);
+            const reducedData = parseShippingData(packageName, data.Shipment);
+            console.log(reducedData)
+            saveShippingData(packageName, reducedData);
         }
     };
     httpRequest.open("POST", corsproxy + testurl);
@@ -78,6 +91,13 @@ function makeListRequest(packageName, trackNum) {
 
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var addform = document.getElementById('addform');
+    var testget = document.getElementById('testget');
+
+    testget.addEventListener('click', () => {
+        getShippingData('testdummy', (data) => {
+            console.log('dummy data: ' + JSON.stringify(data));
+        });
+    });
 
     addform.addEventListener('submit', (evt) => {
         evt.preventDefault();

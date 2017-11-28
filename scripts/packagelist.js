@@ -1,12 +1,5 @@
-/**
- * Remove function for DOM elements to allow easier removing later
- */
-Element.prototype.remove = function () {
-    this.parentElement.removeChild(this);
-}
-
 function formatPackageName(packageName) {
-    return packageName.replace(' ', '_');
+    return packageName.replace(/ /g, '_');
 }
 
 /**
@@ -65,8 +58,7 @@ function constructMapsButton(packageName) {
     mapbtn.setAttribute('value', "Show Location");
     mapbtn.addEventListener('click', () => {
         getShippingData(packageName, (shippingData) => {
-            var location = getLocation(shippingData);
-            chrome.tabs.create({url: location.mapsUrl});
+            chrome.tabs.create({url: shippingData.latestLocation.fullLocation});
         });
     });
     return mapbtn;
@@ -99,34 +91,35 @@ function constructDataDiv(packageName) {
     return datdiv;
 }
 
-/**
- * Adds given element to DOM in designated div
- * 
- * @param {Element} element element to add to outdiv
- */
-function addToView(element) {
-    var outdiv = document.getElementById('outdiv');
-    outdiv.appendChild(element);
-}
-
-function afterLoad(elemId, callback) {
-    var elem = document.getElementById(elemId);
-    if(elem !== undefined) {
-        callback(elem);
-    }
-    else {
-        setTimeout(afterLoad(elemId, callback), 50);
-    }
-}
-
 function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
-        getShippingData(packageName, (shippingData) => {
-            datdiv.innerHTML += '<p>Date: ' + parseDate(shippingData).fullString + '</p>';
-            datdiv.innerHTML += '<p>Location: ' + getLocation(shippingData).fullLocation + '</p>';
-            datdiv.innerHTML += '<p>Tracking Number: ' + getTrackingNumber(shippingData) + '</p>';
+        getAfterSave(packageName, (shippingData) => {
+            console.log('GOT DATA!');
+            datdiv.innerHTML += '<p>Date: ' + shippingData.date.fullDate + '</p>';
+            datdiv.innerHTML += '<p>Location: ' + shippingData.latestLocation.fullLocation + '</p>';
+            datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
         });
     });
+}
+
+function makePackageHtml(packageName) {
+    // Make individual components of package DOM items
+    var pkgdiv = constructPkgDiv(packageName);
+    var btndiv = constructBtnDiv(packageName);
+    var logbtn = constructLogButton(packageName);
+    var mapbtn = constructMapsButton(packageName);
+    var rmvbtn = constructRmvButton(packageName);
+    var datdiv = constructDataDiv(packageName);
+    // Add components into main package div
+    pkgdiv.appendChild(btndiv);
+    pkgdiv.appendChild(datdiv);
+    btndiv.appendChild(logbtn);
+    btndiv.appendChild(mapbtn);
+    btndiv.appendChild(rmvbtn);
+    // Add package div to main view
+    addToView(pkgdiv);
+    // Display shipping data in view
+    tryDisplayData(packageName);
 }
 
 /**
@@ -141,19 +134,7 @@ function addPackage(packageName, trackNum) {
         packageName = formatPackageName(packageName);
     }
     makeListRequest(packageName, trackNum);     // UPS API call to get tracking data
-    var pkgdiv = constructPkgDiv(packageName);
-    var btndiv = constructBtnDiv(packageName);
-    var logbtn = constructLogButton(packageName);
-    var mapbtn = constructMapsButton(packageName);
-    var rmvbtn = constructRmvButton(packageName);
-    var datdiv = constructDataDiv(packageName);
-    pkgdiv.appendChild(btndiv);
-    pkgdiv.appendChild(datdiv);
-    btndiv.appendChild(logbtn);
-    btndiv.appendChild(mapbtn);
-    btndiv.appendChild(rmvbtn);
-    addToView(pkgdiv);
-    tryDisplayData(packageName);
+    makePackageHtml(packageName);
 }
 
 /**
