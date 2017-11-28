@@ -30,17 +30,6 @@ function getUpsRequest(trackNum) {
 }
 
 /**
- * Function for testing that logs date to check if data is accessed properly
- * 
- * @param {string} packageName name of package for which shipping date should be printed
- * @param {Object} shippingData data to look through for date
- */
-function logPickup(packageName, shippingData) {
-    var date = parseDate(shippingData);
-    console.log(packageName + ' due for pickup on ' + date.month + '/' + date.day + '/' + date.year);
-}
-
-/**
  * Gets data for given package name
  * 
  * @param {string} packageName name of package for which data should be retrieved
@@ -48,7 +37,7 @@ function logPickup(packageName, shippingData) {
  */
 function getPackageData(packageName, callback) {
     chrome.storage.sync.get(packageName, (items) => {
-        callback(chrome.runtime.lastError() ? null : items[packageName]);
+        callback(chrome.runtime.lastError ? null : items[packageName]);
     });
 }
 
@@ -81,7 +70,6 @@ function makeListRequest(trackNum) {
             const data = (JSON.parse(httpRequest.response)).TrackResponse
             console.log(data);
             savePackageData("TestPackage", data.Shipment);
-            logPickup("TestPackage", data.Shipment);
         }
     };
     httpRequest.open("POST", corsproxy + testurl);
@@ -91,8 +79,14 @@ function makeListRequest(trackNum) {
 
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var listbtn = document.getElementById('listData');
+    var showbtn = document.getElementById('showLogs');
 
     listbtn.addEventListener('click', () => {
         makeListRequest("990728071");
+        showLogDiv();
+    });
+
+    showbtn.addEventListener('click', () => {
+        var shippingData = getPackageData("TestPackage", logAll);
     });
 });
