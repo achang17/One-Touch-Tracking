@@ -68,19 +68,27 @@ function getLatestActivityLocation(shippingData) {
 /**
  * Trims location string to be cleaner and human-readable
  * 
- * @param {string} location location string to trim
+ * @param {string} location object with location data
  */
-function trimLocation(locationStr) {
-    var outStr = locationStr
-    if(outStr.includes('undefined, ')) {
-        outStr = outStr.replace(/undefined, /g, ''); // removes intermediate "undefined" labels
+function getLocationString(location) {
+    var outStr = '';
+    if(location.city !== undefined) {
+        outStr += location.city;
     }
-    if(locationStr.endsWith('undefined')) {
-        outStr = outStr.replace(/undefined/g, ''); // removes undefined + preceding , (", undefined")
+    if(location.stateProvince !== undefined) {
+        outStr += ', ' + location.stateProvince;
+    }
+    if(location.country !== undefined) {
+        outStr += ', ' + location.country;
     }
     return outStr;
 }
 
+/**
+ * Formats location string to be valid in URL for Google Maps
+ * 
+ * @param {string} locationStr string for full location
+ */
 function formatForUrl(locationStr) {
     return locationStr.replace(/ /g, '+');
 }
@@ -100,12 +108,21 @@ function getLocation(shippingData) {
         }
     }
     else {
-        var locationStr = latestLocation.Address === undefined ? 
-        latestLocation.City + ', ' + latestLocation.StateProvinceCode + ', '+ latestLocation.CountryCode :
-        locationStr = latestLocation.Address.City + ', ' + latestLocation.Address.StateProvinceCode + ', ' + latestLocation.Address.CountryCode
+        var location = latestLocation.Address === undefined ? 
+            {
+                city: latestLocation.City, 
+                stateProvince: latestLocation.StateProvinceCode, 
+                country: latestLocation.CountryCode
+            } :
+            {
+                city: latestLocation.Address.City,
+                stateProvince: latestLocation.Address.StateProvinceCode,
+                country: latestLocation.Address.CountryCode
+            }
+        var locationStr = getLocationString(location);
         console.log('LOCATION STR:' + locationStr);
         addrObj =  {
-            fullLocation: trimLocation(locationStr),
+            fullLocation: locationStr,
             mapsUrl: 'https://www.google.com/maps/place/' + formatForUrl(locationStr) + '/'
         }
         console.log(addrObj);

@@ -27,6 +27,6 @@ function afterLoad(elemId, callback) {
         callback(elem);
     }
     else {
-        setTimeout(afterLoad(elemId, callback), 50);
+        setTimeout(function() {afterLoad(elemId, callback)}, 50);
     }
 }

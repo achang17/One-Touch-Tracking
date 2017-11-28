@@ -66,7 +66,7 @@ function constructMapsButton(packageName) {
     mapbtn.setAttribute('value', "Show Location");
     mapbtn.addEventListener('click', () => {
         getShippingData(packageName, (shippingData) => {
-            chrome.tabs.create({url: shippingData.latestLocation.fullLocation});
+            chrome.tabs.create({url: shippingData.latestLocation.mapsUrl});
         });
     });
     return mapbtn;

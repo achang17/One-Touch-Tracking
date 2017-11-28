@@ -57,7 +57,7 @@ function getAfterSave(packageName, callback) {
             callback(items[packageName]);
         }
         else { // Try again after short wait
-            setTimeout(getAfterSave(packageName, callback), 50);
+            setTimeout(function() {getAfterSave(packageName, callback)}, 50);
         }
     });
 }
