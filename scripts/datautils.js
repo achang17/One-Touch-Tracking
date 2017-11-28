@@ -3,13 +3,12 @@
  * 
  * @param {Object} shippingData whole object from response to parse
  */
-function parseShippingData(packageName, shippingData) {
+function parseShippingData(packageName, trackNum, shippingData) {
     return {
         packageName: packageName,
-        date: getDate(shippingData),
-        latestActivity: getLatestActivity(shippingData),
-        latestLocation: getLocation(shippingData),
-        trackingNumber: getTrackingNumber(shippingData)
+        trackingNumber: trackNum,
+        date: getPickupDate(shippingData),
+        latestLocation: getLocation(shippingData)
     };
 }
 
@@ -18,16 +17,28 @@ function parseShippingData(packageName, shippingData) {
  * 
  * @param {Object} shippingData data from which date will be obtained
  */
-function getDate(shippingData) {
-    var month = shippingData.PickupDate.substring(4, 6),
-        day = shippingData.PickupDate.substring(6, 8),
-        year = shippingData.PickupDate.substring(0, 4);
-    return {
-        month: month,
-        day: day,
-        year: year,
-        fullDate: month + '/' + day + '/' + year
+function getPickupDate(shippingData) {
+    var outDate = {};
+    if(shippingData.PickupDate === undefined) {
+        outDate = {
+            month: '00',
+            day: '00',
+            year: '0000',
+            fullDate: 'n/a'
+        }
     }
+    else {
+        var month = shippingData.PickupDate.substring(4, 6),
+            day = shippingData.PickupDate.substring(6, 8),
+            year = shippingData.PickupDate.substring(0, 4);
+        outDate = {
+            month: month,
+            day: day,
+            year: year,
+            fullDate: month + '/' + day + '/' + year
+        }
+    }
+    return outDate;
 }
 
 /**
@@ -35,15 +46,23 @@ function getDate(shippingData) {
  * 
  * @param {Object} shippingData data from wich activity will be obtained
  */
-function getLatestActivity(shippingData) {
-    const latestActivity = shippingData.Package !== undefined ? shippingData.Package.Activity : 
-                           shippingData.Activity[shippingData.Activity.length - 1];
-    if(Array.isArray(latestActivity)) {
-        return latestActivity[latestActivity.length - 1];
+function getLatestActivityLocation(shippingData) {
+    const packageActivity = shippingData.Package !== undefined ? shippingData.Package.Activity : shippingData.Activity;
+    var latestLocation;
+    if(Array.isArray(packageActivity)) {
+        var mostRecentActivity = packageActivity[0]; // guaranteed to exist if array
+        for(var i = 0; i < packageActivity.length; i++) {
+            const activity = packageActivity[i];
+            if(mostRecentActivity.Date < activity.Date && activity.ActivityLocation !== undefined) {
+                mostRecentActivity = activity;
+            }
+        }
+        latestLocation = mostRecentActivity.ActivityLocation;
     }
     else {
-        return latestActivity;
+        latestLocation = packageActivity.ActivityLocation;
     }
+    return latestLocation;
 }
 
 /**
@@ -72,29 +91,28 @@ function formatForUrl(locationStr) {
  * @param {Object} shippingData data from which location will be collected
  */
 function getLocation(shippingData) {
-    const latestLocation = getLatestActivity(shippingData).ActivityLocation;
-    console.log(latestLocation);
-    var locationStr = latestLocation.Address === undefined ? 
+    var latestLocation = getLatestActivityLocation(shippingData);
+    var addrObj = {};
+    if(latestLocation === undefined) {
+        addrObj = {
+            fullLocation: 'No known location',
+            mapsUrl: 'https://maps.google.com/'
+        }
+    }
+    else {
+        var locationStr = latestLocation.Address === undefined ? 
         latestLocation.City + ', ' + latestLocation.StateProvinceCode + ', '+ latestLocation.CountryCode :
         locationStr = latestLocation.Address.City + ', ' + latestLocation.Address.StateProvinceCode + ', ' + latestLocation.Address.CountryCode
-    console.log('LOCATION STR:' + locationStr);
-    var addrObj =  {
-        fullLocation: trimLocation(locationStr),
-        mapsUrl: 'https://www.google.com/maps/place/' + formatForUrl(locationStr) + '/'
+        console.log('LOCATION STR:' + locationStr);
+        addrObj =  {
+            fullLocation: trimLocation(locationStr),
+            mapsUrl: 'https://www.google.com/maps/place/' + formatForUrl(locationStr) + '/'
+        }
+        console.log(addrObj);
+        console.log(addrObj.fullLocation);
+        console.log(addrObj.mapsUrl);
     }
-    console.log(addrObj);
-    console.log(addrObj.fullLocation);
-    console.log(addrObj.mapsUrl);
     return addrObj;
-}
-
-/**
- * Gets tracking number
- * 
- * @param {Object} shippingData data from which to return number
- */
-function getTrackingNumber(shippingData) {
-    return shippingData.TrackingNumber;
 }
 
 // function interpretProgress(shippingData) {
