@@ -6,13 +6,17 @@ JSON API is used by making HTPP POST requests to given testing and production UR
 
 # Data Standards
 
-Shipping Data object saved from API response is referred to in scripts as `shippingData`, and only the shipping part of returned data is saved. `data` is used to refer to the entire response object, and the whole response is not saved because the other half (called "response") does not appear to be useful. If it is determined to be useful, it may be saved as well.
+After obtaining data from the UPS API, it is reduced to what we need and saved in the extension's storage in Chrome. In the code, both before and after it is reduced from its original size (the before period is short) it is referred to as `shippingData`.
+
+`packageName` always refers to the name of the package and `trackNum` refers to the tracking number. Self explanatory.
 
 # Scripts
 
 * [testlog.js](./scripts/testlog.js) contains logging functions for testing.
+* [domutils.js](./scripts/domutils.js) contains functions to help insert things into DOM.
 * [datautils.js](./scripts/datautils.js) is used by all scripts and contains functions for accessing and using the data provided by the UPS API.
-* [popup.js](./scripts/popup.js) is the primary script that drives the popup and contains the event listener for things that determine action
+* [packagelist.js](./scripts/packagescripts.js) contains functions for managing the list of packages in both the DOM and storage.
+* [popup.js](./scripts/popup.js) is the primary script that drives the popup and contains the event listener for buttons in the main view.
 
 # Adding Packages
 
