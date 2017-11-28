@@ -31,34 +31,12 @@
     <!-- FOR TESTING LOG API INFO -->
     <div>
         <div class="buttonline">
-            <span>Get Delivered Info</span>
-            <input type="button" id="deliData" value="Test Tracking API"></input>
-        </div>
-        <div class="hidden" id="deliLogs">
-            <div class="buttonline">
-                <span>Log Test Info</span>
-                <input type="button" id="deliLogs" value="Show Logs"></input>
-            </div>
-            <div class="buttonline">
-                <span>Show Latest Location in Google Maps</span>
-                <input type="button" id="deliMaps" value="Show Location"></input>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div class="buttonline">
-            <span>Get In Transit Info</span>
-            <input type="button" id="intrData" value="Test Tracking API"></input>
-        </div>
-        <div class="hidden" id="intrLogs">
-            <div class="buttonline">
-                <span>Log Test Info</span>
-                <input type="button" id="intrLogs" value="Show Logs"></input>
-            </div>
-            <div class="buttonline">
-                <span>Show Latest Location in Google Maps</span>
-                <input type="button" id="intrMaps" value="Show Location"></input>
-            </div>
+            <span>Add Package</span>
+            <form id="addform">
+                <input type="text" id="packageName" value="" min="0" max="100">
+                <input type="text" id="trackNum" value="" min="0" max="100">
+                <input type="submit" value="Add+">
+            </form>
         </div>
     </div>
     <div id="outdiv">

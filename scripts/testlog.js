@@ -8,6 +8,15 @@ function showLogDiv(btnName) {
 // DATA LOGGING
 
 /**
+ * Logs whole object
+ * 
+ * @param {Object} shippingData whole object to log
+ */
+function logShippingData(shippingData) {
+    console.log(shippingData);
+}
+
+/**
  * Wrapper that calls all log functions
  * 
  * @param {Object} shippingData data to use for logging

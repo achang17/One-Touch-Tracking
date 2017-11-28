@@ -85,42 +85,12 @@ function inTransitRequest() {
 }
 
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
-    var delibtn = document.getElementById('deliData');
-    var intrbtn = document.getElementById('intrData');
-    var dlogbtn = document.getElementById('deliLogs');
-    var ilogbtn = document.getElementById('intrLogs');
-    var dmapbtn = document.getElementById('deliMaps');
-    var imapbtn = document.getElementById('intrMaps');
+    var addform = document.getElementById('addform');
 
-    delibtn.addEventListener('click', () => {
-        deliveredRequest();
-        showLogDiv('deli');
-    });
-
-    intrbtn.addEventListener('click', () => {
-        inTransitRequest();
-        showLogDiv('intr');
-    });
-
-    dlogbtn.addEventListener('click', () => {
-        var shippingData = getShippingData("Delivered", logAll);
-    });
-
-    dmapbtn.addEventListener('click', () => {
-        getShippingData("Delivered", function(shippingData) {
-            var location = getLocation(shippingData);
-            chrome.tabs.create({url: location.mapsUrl});
-        });
-    });
-
-    ilogbtn.addEventListener('click', () => {
-        var shippingData = getShippingData("inTransit", logAll);
-    });
-
-    imapbtn.addEventListener('click', () => {
-        getShippingData("inTransit", function(shippingData) {
-            var location = getLocation(shippingData);
-            chrome.tabs.create({url: location.mapsUrl});
-        });
+    addform.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        var packageName = evt.target.elements.packageName.value;
+        var trackNum = evt.target.elements.trackNum.value;
+        addPackage(packageName, trackNum);
     });
 });
