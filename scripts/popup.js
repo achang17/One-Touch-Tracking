@@ -76,14 +76,6 @@ function makeListRequest(packageName, trackNum) {
     httpRequest.send(JSON.stringify(jsonData));
 }
 
-function deliveredRequest() {
-    makeListRequest("Delivered", "1Z12345E6605272234");
-}
-
-function inTransitRequest() {
-    makeListRequest("inTransit", "990728071");
-}
-
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var addform = document.getElementById('addform');
 
@@ -94,3 +86,7 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         addPackage(packageName, trackNum);
     });
 });
+
+// REFERENCE TRACKING NUMBERS
+// Delivered: 1Z12345E6605272234
+// inTransit: 990728071
