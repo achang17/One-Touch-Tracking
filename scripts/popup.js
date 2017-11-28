@@ -1,3 +1,5 @@
+// import * as dataUtils from './datautils';
+
 /**
  * Forms JSON data to use in HTTP Request to UPS API using given tracking number
  * 
@@ -34,11 +36,8 @@ function getUpsRequest(trackNum) {
  * @param {Object} shippingData data to look through for date
  */
 function logPickup(packageName, shippingData) {
-    const date = shippingData.PickupDate;
-    var month = date.substring(4,6),
-        day = date.substring(6,8),
-        year = date.substring(0,4);
-    console.log(packageName + ' due for pickup on ' + month + '/' + day + '/' + year);
+    var date = parseDate(shippingData);
+    console.log(packageName + ' due for pickup on ' + date.month + '/' + date.day + '/' + date.year);
 }
 
 /**
@@ -94,6 +93,6 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
     var listbtn = document.getElementById('listData');
 
     listbtn.addEventListener('click', () => {
-        makeListRequest("1Z12345E1305277940");
+        makeListRequest("990728071");
     });
 });
