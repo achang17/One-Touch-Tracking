@@ -1,5 +1,3 @@
-// import * as dataUtils from './datautils';
-
 /**
  * Forms JSON data to use in HTTP Request to UPS API using given tracking number
  * 
