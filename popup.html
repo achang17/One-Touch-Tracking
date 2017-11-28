@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
 <head>
     <title>Getting Started Extension's Popup</title>
     <style type="text/css">
@@ -19,7 +20,9 @@
         }
     </style>
 
+    <link rel="stylesheet" type="text/css" href="styles/test.css">
     <script src="scripts/datautils.js"></script>
+    <script src="scripts/testlog.js"></script>
     <script src="scripts/popup.js"></script>
 </head>
 
@@ -28,6 +31,10 @@
     <div>
         <span>Get Test Info</span>
         <input type="button" id="listData" value="Test Tracking API"></input>
+    </div>
+    <div class="hidden" id="logs">
+        <span>Log Test Info</span>
+        <input type="button" class="shown" id="showLogs" value="Show Logs"></input>
     </div>
     <div id="outdiv">
         <!-- OUTPUT DATA HERE -->
