@@ -91,13 +91,13 @@ function makeListRequest(packageName, trackNum) {
 
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var addform = document.getElementById('addform');
-    var testget = document.getElementById('testget');
+    // var testget = document.getElementById('testget');
 
-    testget.addEventListener('click', () => {
-        getShippingData('testdummy', (data) => {
-            console.log('dummy data: ' + JSON.stringify(data));
-        });
-    });
+    // testget.addEventListener('click', () => {
+    //     getShippingData('testdummy', (data) => {
+    //         console.log('dummy data: ' + JSON.stringify(data));
+    //     });
+    // });
 
     addform.addEventListener('submit', (evt) => {
         evt.preventDefault();
