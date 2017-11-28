@@ -13,3 +13,7 @@ Shipping Data object saved from API response is referred to in scripts as `shipp
 * [testlog.js](./scripts/testlog.js) contains logging functions for testing.
 * [datautils.js](./scripts/datautils.js) is used by all scripts and contains functions for accessing and using the data provided by the UPS API.
 * [popup.js](./scripts/popup.js) is the primary script that drives the popup and contains the event listener for things that determine action
+
+# Adding Packages
+
+Package Name comes first and Tracking Number comes second. Data is stored with Package Name as key for the given Tracking Number, and names are reformatted to replace spaces with underscores.
