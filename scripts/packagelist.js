@@ -32,6 +32,7 @@ function constructPkgDiv(packageName) {
 function constructBtnDiv(packageName) {
     var btndiv = document.createElement('div'); // make div to show data
     btndiv.id = packageName + 'Buttons';
+    btndiv.className = 'btndiv';
     return btndiv;
 }
 
@@ -43,6 +44,7 @@ function constructBtnDiv(packageName) {
 function constructLogButton(packageName) {
     var logbtn = document.createElement('input');
     logbtn.id = packageName + 'Logs';
+    logbtn.className = 'logbtn';
     logbtn.setAttribute('type', "button");
     logbtn.setAttribute('value', "Show Logs");
     logbtn.addEventListener('click', () => {
@@ -59,6 +61,7 @@ function constructLogButton(packageName) {
 function constructMapsButton(packageName) {
     var mapbtn = document.createElement('input');
     mapbtn.id = packageName + 'Maps';
+    mapbtn.className = 'mapbtn';
     mapbtn.setAttribute('type', "button");
     mapbtn.setAttribute('value', "Show Location");
     mapbtn.addEventListener('click', () => {
@@ -77,6 +80,7 @@ function constructMapsButton(packageName) {
 function constructRmvButton(packageName) {
     var rmvbtn = document.createElement('input');
     rmvbtn.id = packageName + 'Remove';
+    rmvbtn.className = 'rmvbtn';
     rmvbtn.setAttribute('type', "button");
     rmvbtn.setAttribute('value', "Remove Package")
     rmvbtn.addEventListener('click', () => {
@@ -93,6 +97,7 @@ function constructRmvButton(packageName) {
 function constructDataDiv(packageName) {
     var datdiv = document.createElement('div');
     datdiv.id = packageName + 'Data';
+    datdiv.className = 'datdiv';
     return datdiv;
 }
 
