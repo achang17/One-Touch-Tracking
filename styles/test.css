@@ -5,3 +5,7 @@
 .shown {
     display: block;
 }
+
+#logs {
+    margin-top: 25px;
+}
