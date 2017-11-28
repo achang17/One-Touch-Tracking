@@ -53,8 +53,8 @@ function saveShippingData(packageName, shippingData) {
 
 function getAfterSave(packageName, callback) {
     chrome.storage.sync.get(packageName, (items) => {
-        if(items !== undefined) {   // check if item has been saved
-            callback(chrome.runtime.lastError ? null : items[packageName]);
+        if(items !== undefined && items[packageName] !== undefined) { // check if item has been saved
+            callback(items[packageName]);
         }
         else { // Try again after short wait
             setTimeout(getAfterSave(packageName, callback), 50);
