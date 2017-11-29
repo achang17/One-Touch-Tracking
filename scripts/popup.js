@@ -79,7 +79,6 @@ function makeListRequest(packageName, trackNum) {
             const data = (JSON.parse(httpRequest.response)).TrackResponse;
             console.log(data.Shipment);
             const reducedData = parseShippingData(packageName, trackNum, data.Shipment);
-            console.log(reducedData)
             saveShippingData(packageName, reducedData);
         }
     };

@@ -120,14 +120,10 @@ function getLocation(shippingData) {
                 country: latestLocation.Address.CountryCode
             }
         var locationStr = getLocationString(location);
-        console.log('LOCATION STR:' + locationStr);
         addrObj =  {
             fullLocation: locationStr,
             mapsUrl: 'https://www.google.com/maps/place/' + formatForUrl(locationStr) + '/'
         }
-        console.log(addrObj);
-        console.log(addrObj.fullLocation);
-        console.log(addrObj.mapsUrl);
     }
     return addrObj;
 }
