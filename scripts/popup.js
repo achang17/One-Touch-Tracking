@@ -105,7 +105,3 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         addform.reset();
     });
 });
-
-// REFERENCE TRACKING NUMBERS
-// Delivered: 1Z12345E6605272234
-// inTransit: 990728071
