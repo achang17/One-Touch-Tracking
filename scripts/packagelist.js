@@ -45,8 +45,9 @@ function constructLogButton(packageName) {
     var logbtn = document.createElement('input');
     logbtn.id = packageName + 'Logs';
     logbtn.className = 'logbtn';
-    logbtn.setAttribute('type', "button");
+    logbtn.setAttribute('type', "image");
     logbtn.setAttribute('value', "Show Logs");
+    logbtn.setAttribute('src', "https://cdn3.iconfinder.com/data/icons/lexter-flat-colorfull-file-formats/56/log-128.png")
     logbtn.addEventListener('click', () => {
         getShippingData(packageName, logAll);
     });
@@ -62,8 +63,9 @@ function constructMapsButton(packageName) {
     var mapbtn = document.createElement('input');
     mapbtn.id = packageName + 'Maps';
     mapbtn.className = 'mapbtn';
-    mapbtn.setAttribute('type', "button");
+    mapbtn.setAttribute('type', "image");
     mapbtn.setAttribute('value', "Show Location");
+    mapbtn.setAttribute('src', "https://freeiconshop.com/wp-content/uploads/edd/location-map-flat.png");
     mapbtn.addEventListener('click', () => {
         getShippingData(packageName, (shippingData) => {
             chrome.tabs.create({url: shippingData.latestLocation.mapsUrl});
@@ -81,8 +83,9 @@ function constructRmvButton(packageName) {
     var rmvbtn = document.createElement('input');
     rmvbtn.id = packageName + 'Remove';
     rmvbtn.className = 'rmvbtn';
-    rmvbtn.setAttribute('type', "button");
-    rmvbtn.setAttribute('value', "Remove Package")
+    rmvbtn.setAttribute('type', "image");
+    rmvbtn.setAttribute('value', "Remove Package");
+    rmvbtn.setAttribute('src', "http://icons.iconarchive.com/icons/custom-icon-design/flatastic-4/128/Package-delete-icon.png")
     rmvbtn.addEventListener('click', () => {
         removePackage(packageName);
     });
@@ -111,9 +114,9 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
+            datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
             datdiv.innerHTML += '<p>Date Picked Up: ' + shippingData.date.fullDate + '</p>';
             datdiv.innerHTML += '<p>Location: ' + shippingData.latestLocation.fullLocation + '</p>';
-            datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
         });
     });
 }

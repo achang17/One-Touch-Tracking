@@ -20,5 +20,32 @@ h3 {
 }
 
 h4 {
-    
+    color: #dc6303;
+    font-size: 18px;
+    font-family: "Consolas";
+}
+
+.rmvbtn {
+    height: 20px;
+    width: 20px;
+    padding-left: 5px;
+    margin: auto;
+}
+
+.mapbtn {
+    height: 20px;
+    width: 20px;
+    padding-left: 5px;
+    margin: auto;
+}
+
+.logbtn {
+    height: 20px;
+    width: 20px;
+    padding-left: 5px;
+    margin: auto;
+}
+
+p {
+    font-family: "Consolas";
 }
