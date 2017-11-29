@@ -21,6 +21,7 @@
     </style>
 
     <link rel="stylesheet" type="text/css" href="styles/test.css">
+    <link rel="stylesheet" type="text/css" href="styles/addPackage.css">
     <script src="scripts/domutils.js"></script>
     <script src="scripts/datautils.js"></script>
     <script src="scripts/testlog.js"></script>
@@ -32,11 +33,13 @@
     <!-- FOR TESTING LOG API INFO -->
     <div id="formdiv">
         <div class="buttonline">
-            <span>Add Package</span>
+            <h2>Add Package</h2>
             <form id="addform">
-                <input type="text" id="packageName" value="Package Name" min="0" max="100">
-                <input type="text" id="trackNum" value="Tracking Number" min="0" max="100">
-                <input type="submit" value="Add+">
+                <h3>Name</h3>
+                <input type="text" id="packageName" value="" placeholder="Package Name" min="0" max="100">
+                <h3>Tracking Number</h3>
+                <input type="text" id="trackNum" value="" placeholder="Tracking Number" min="0" max="100">
+                <input class="addbutton" type="image" value="Add+" src="https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/Package-Add.png" >
             </form>
         </div>
         <!-- <div class="buttonline">
