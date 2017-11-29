@@ -51,6 +51,12 @@ function saveShippingData(packageName, shippingData) {
     chrome.storage.sync.set(items);
 }
 
+/**
+ * Gets data from storage but waits to make sure it has been saved first
+ * 
+ * @param {string} packageName package name to load
+ * @param {function} callback function to be called after data is obtained
+ */
 function getAfterSave(packageName, callback) {
     chrome.storage.sync.get(packageName, (items) => {
         if(items !== undefined && items[packageName] !== undefined) { // check if item has been saved
