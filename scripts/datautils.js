@@ -8,7 +8,8 @@ function parseShippingData(packageName, trackNum, shippingData) {
         packageName: packageName,
         trackingNumber: trackNum,
         date: getPickupDate(shippingData),
-        latestLocation: getLocation(shippingData)
+        latestLocation: getLocation(shippingData),
+        status: getLatestActivityStatus(shippingData)
     };
 }
 
@@ -63,6 +64,36 @@ function getLatestActivityLocation(shippingData) {
         latestLocation = packageActivity.ActivityLocation;
     }
     return latestLocation;
+}
+
+/**
+ * Gets object for latest Activity status
+ *
+ * @param {Object} shippingData data from wich activity will be obtained
+ */
+function getLatestActivityStatus(shippingData) {
+    if (shippingData.Package === undefined) {
+        return shippingData.CurrentStatus.Description;
+    }
+    else{
+        const packageStatus = shippingData.Package.Activity;
+        var latestStatus;
+        if(Array.isArray(packageStatus)) {
+            var mostRecentActivity = packageStatus[0]; // guaranteed to exist if array
+            for(var i = 0; i < packageStatus.length; i++) {
+                const activity = packageStatus[i];
+                if(mostRecentActivity.Date < activity.Date && activity.Status !== undefined) {
+                    mostRecentActivity = activity;
+                }
+            }
+            latestStatus = mostRecentActivity.Status;
+        }
+        else {
+            latestStatus = packageStatus.Status;
+        }
+        return latestStatus.Description;
+    }
+
 }
 
 /**
