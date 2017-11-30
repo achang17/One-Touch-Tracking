@@ -1,0 +1,51 @@
+.addbutton{
+    height: 25px;
+    width: 25px;
+    padding-left: 5px;
+    margin: auto;
+}
+
+h2 {
+    color: #e67900;
+    font-family: "Arial";
+}
+
+h3 {
+    font-family: "Arial";
+    font-size: 18px;
+}
+
+#trackNum {
+    margin-top: 0;
+}
+
+h4 {
+    color: #dc6303;
+    font-size: 18px;
+    font-family: "Arial";
+}
+
+.rmvbtn {
+    height: 25px;
+    width: 25px;
+    padding-left: 30%;
+    margin: auto;
+}
+
+.mapbtn {
+    height: 25px;
+    width: 25px;
+    padding-left: 30%;
+    margin: auto;
+}
+
+.logbtn {
+    height: 25px;
+    width: 25px;
+    padding-left: 5px;
+    margin: auto;
+}
+
+p {
+    font-family: "sans-serif";
+}
