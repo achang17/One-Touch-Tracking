@@ -45,7 +45,7 @@ function getPickupDate(shippingData) {
 /**
  * Gets object for latest Activity regardless of status
  * 
- * @param {Object} shippingData data from wich activity will be obtained
+ * @param {Object} shippingData data from which activity will be obtained
  */
 function getLatestActivityLocation(shippingData) {
     const packageActivity = shippingData.Package !== undefined ? shippingData.Package.Activity : shippingData.Activity;
@@ -67,9 +67,9 @@ function getLatestActivityLocation(shippingData) {
 }
 
 /**
- * Gets object for latest Activity status
+ * Gets object for latest status(progress).
  *
- * @param {Object} shippingData data from wich activity will be obtained
+ * @param {Object} shippingData data from which activity will be obtained
  */
 function getLatestActivityStatus(shippingData) {
     if (shippingData.Package === undefined) {
