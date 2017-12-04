@@ -125,19 +125,8 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
-            if (shippingData.status.toLowerCase().indexOf("delivered") !== -1){
-                datdiv.innerHTML +=
-                    '<img src="../images/deliveredcheck.png" alt="Delivered" height="20" width="20"> ';
-            }
-            else if (shippingData.status === undefined){
-                datdiv.innerHTML +=
-                    ' <img src="../images/inprogresstruck.png" alt="In Progress" height="20" width="20"> ';
-
-            }
-            else{
-                datdiv.innerHTML +=
-                    ' <img src="../images/inprogresstruck.png" alt="In Progress" height="20" width="20"> ';
-            }
+            datdiv.innerHTML +=
+                '<img src="' + interpretStatus(shippingData) + '" alt="Delivered" height="20" width="20"> ';
             datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
             datdiv.innerHTML += '<p>Date Picked Up: ' + shippingData.date.fullDate + '</p>';
             datdiv.innerHTML += '<p>Location: ' + shippingData.latestLocation.fullLocation+ '</p>';

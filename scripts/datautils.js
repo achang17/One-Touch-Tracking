@@ -182,9 +182,10 @@ function clearStorage() {
     });
 }
 
-// function interpretProgress(shippingData) {
-
-// }
+function interpretStatus(shippingData) {
+    return shippingData.status.toLowerCase().indexOf("delivered") !== -1 ? 
+           '../images/deliveredcheck.png' : '../images/inprogresstruck.png';
+}
 
 // function getProgress(shippingData) {
 
