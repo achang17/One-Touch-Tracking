@@ -95,7 +95,7 @@ function makeListRequest(packageName, trackNum) {
 
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var addform = document.getElementById('addform');
-    var clearstorage = document.getElementById('clearstorage');
+    var clearbtn = document.getElementById('clearbtn');
     displayList();
 
     addform.addEventListener('submit', (evt) => {
