@@ -16,6 +16,16 @@ function addToView(element) {
 }
 
 /**
+ * Removes added elements from view
+ */
+function emptyView() {
+    var outdiv = document.getElementById('outdiv');
+    while(outdiv.firstChild) {
+        outdiv.removeChild(outdiv.firstChild);
+    }
+}
+
+/**
  * Calls callback function after element with given ID loads in DOM
  * 
  * @param {string} elemId id of element for which to wait
