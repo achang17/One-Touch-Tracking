@@ -165,7 +165,6 @@ function makePackageHtml(packageName) {
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
-
     btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
