@@ -95,13 +95,8 @@ function makeListRequest(packageName, trackNum) {
 
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var addform = document.getElementById('addform');
-    // var testget = document.getElementById('testget');
-
-    // testget.addEventListener('click', () => {
-    //     getShippingData('testdummy', (data) => {
-    //         console.log('dummy data: ' + JSON.stringify(data));
-    //     });
-    // });
+    var clearstorage = document.getElementById('clearstorage');
+    displayList();
 
     addform.addEventListener('submit', (evt) => {
         evt.preventDefault();
@@ -110,4 +105,20 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         addPackage(packageName, trackNum);
         addform.reset();
     });
+    clearstorage.addEventListener('click', () => {
+        clearStorage();
+    });
+
+    // var teststorage = document.getElementById('teststorage');
+    // var logdates = document.getElementById('logdates');
+    // var lognames = document.getElementById('lognames');
+    // teststorage.addEventListener('click', () => {
+    //     logStorage();
+    // });
+    // logdates.addEventListener('click', () => {
+    //     logAllDates();
+    // });
+    // lognames.addEventListener('click', () => {
+    //     logAllNames();
+    // });
 });
