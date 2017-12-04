@@ -126,7 +126,8 @@ function tryDisplayData(packageName) {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
             datdiv.innerHTML +=
-                '<img src="' + interpretStatus(shippingData) + '" alt="Delivered" height="20" width="20"> ';
+                '<img src="' + interpretStatus(shippingData).img + '" alt="' + 
+                interpretStatus(shippingData).alt + '" height="20" width="20"> ';
             datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
             datdiv.innerHTML += '<p>Date Picked Up: ' + shippingData.date.fullDate + '</p>';
             datdiv.innerHTML += '<p>Location: ' + shippingData.latestLocation.fullLocation+ '</p>';

@@ -183,8 +183,20 @@ function clearStorage() {
 }
 
 function interpretStatus(shippingData) {
-    return shippingData.status.toLowerCase().indexOf("delivered") !== -1 ? 
-           '../images/deliveredcheck.png' : '../images/inprogresstruck.png';
+    var outStatus = {}
+    if (shippingData.status.toLowerCase().indexOf("delivered") !== -1){
+        outStatus = {
+            img: '../images/deliveredcheck.png',
+            alt: 'Delivered'
+        };
+    }
+    else {
+        outStatus = {
+            img: '../images/inprogresstruck.png',
+            alt: 'In Progress'
+        };
+    }
+    return outStatus;
 }
 
 // function getProgress(shippingData) {
