@@ -127,16 +127,16 @@ function tryDisplayData(packageName) {
             console.log('GOT DATA!');
             if (shippingData.status.toLowerCase().indexOf("delivered") !== -1){
                 datdiv.innerHTML +=
-                    '<img src="https://static1.squarespace.com/static/58ebe28db8a79bada0d457c9/t/5939aada1e5b6c5f9b191f21/1496951518807/check.png" alt="Delivered" height="20" width="20"> ';
+                    '<img src="../images/deliveredcheck.png" alt="Delivered" height="20" width="20"> ';
             }
             else if (shippingData.status === undefined){
                 datdiv.innerHTML +=
-                    ' <img src="https://www.iconsdb.com/icons/preview/orange/truck-3-xxl.png" alt="In Progress" height="20" width="20"> ';
+                    ' <img src="../images/inprogresstruck.png" alt="In Progress" height="20" width="20"> ';
 
             }
             else{
                 datdiv.innerHTML +=
-                    ' <img src="https://www.iconsdb.com/icons/preview/orange/truck-3-xxl.png" alt="In Progress" height="20" width="20"> ';
+                    ' <img src="../images/inprogresstruck.png" alt="In Progress" height="20" width="20"> ';
             }
             datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
             datdiv.innerHTML += '<p>Date Picked Up: ' + shippingData.date.fullDate + '</p>';
