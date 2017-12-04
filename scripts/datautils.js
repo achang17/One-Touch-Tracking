@@ -159,6 +159,16 @@ function getLocation(shippingData) {
     return addrObj;
 }
 
+/**
+ * Clears storage content and wipes HTML list
+ */
+function clearStorage() {
+    chrome.storage.sync.clear(() => {
+        console.log('Successfully cleared storage');
+        emptyView();
+    });
+}
+
 // function interpretProgress(shippingData) {
 
 // }
