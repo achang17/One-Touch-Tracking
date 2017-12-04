@@ -8,17 +8,27 @@ function formatPackageName(packageName) {
 }
 
 /**
+ * Re-adds spaces to package name for presenting in DOM
+ * 
+ * @param {string} packageName package name to format
+ */
+function cleanPackageName(packageName) {
+    return packageName.replace(/_/g, ' ');
+}
+
+/**
  * Constructs HTML div for the added package. Div will wrap buttons and package name
  * 
  * @param {string} packageName name to append to ID tags
  */
 function constructPkgDiv(packageName) {
+    var packageNameClean = cleanPackageName(packageName);
     var pkgdiv = document.createElement('div'); // make div to show data
     pkgdiv.id = packageName;
     pkgdiv.className = 'package';
     pkgdiv.innerHTML =
         '<div class="package">' +
-            '<h4>' + packageName + '</h4>' +
+            '<h4>' + packageNameClean + '</h4>' +
         '</div>';
     return pkgdiv;
 }
@@ -106,7 +116,8 @@ function constructDataDiv(packageName) {
 
 /**
  * Tries to get the saved data for the package after the data
- * from the API call has been saved
+ * from the API call has been saved. Always called after Package's
+ * HTML div has been created and added to view to ensure div exists
  * 
  * @param {string} packageName name of package for which to get data
  */
@@ -136,10 +147,22 @@ function tryDisplayData(packageName) {
     });
 }
 
+function displayList() {
+    chrome.storage.sync.get(null, (items) => {
+        if(items !== undefined && Object.keys(items).length !== 0) {
+            for(var item in items) {
+                pkgdiv = makePackageHtml(item); // Create and get div
+                addToView(pkgdiv); // Add package div to main view
+                tryDisplayData(item); // Display shipping data in view
+            }
+        }
+    });
+}
+
 /**
- * Builds all HTML components for the package and inserts into DOM
+ * Builds and returns all HTML components for the package
  * 
- * @param {string} packageName 
+ * @param {string} packageName name of package to construct HTML for
  */
 function makePackageHtml(packageName) {
     // Make individual components of package DOM items
@@ -156,10 +179,7 @@ function makePackageHtml(packageName) {
     btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
-    // Add package div to main view
-    addToView(pkgdiv);
-    // Display shipping data in view
-    tryDisplayData(packageName);
+    return pkgdiv;
 }
 
 /**
@@ -173,8 +193,12 @@ function addPackage(packageName, trackNum) {
     if(packageName.includes(' ')) {
         packageName = formatPackageName(packageName);
     }
-    makeListRequest(packageName, trackNum);     // UPS API call to get tracking data
-    makePackageHtml(packageName);
+    // UPS API call to get tracking data
+    makeListRequest(packageName, trackNum);
+    // Add html component dynamically
+    pkgdiv = makePackageHtml(packageName);
+    addToView(pkgdiv);
+    tryDisplayData(packageName);
 }
 
 /**
