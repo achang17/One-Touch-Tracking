@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         addPackage(packageName, trackNum);
         addform.reset();
     });
-    clearstorage.addEventListener('click', () => {
+    clearbtn.addEventListener('click', () => {
         clearStorage();
     });
 
