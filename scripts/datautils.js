@@ -103,14 +103,25 @@ function getLatestActivityStatus(shippingData) {
  */
 function getLocationString(location) {
     var outStr = '';
+    // Fill with location data
     if(location.city !== undefined) {
-        outStr += location.city;
+        outStr += location.city + ', ';
     }
     if(location.stateProvince !== undefined) {
-        outStr += ', ' + location.stateProvince;
+        outStr += location.stateProvince + ', ';
     }
     if(location.country !== undefined) {
-        outStr += ', ' + location.country;
+        outStr += location.country + ' ';
+    }
+    if(location.postalCode !== undefined) {
+        outStr += location.postalCode;
+    }
+    // Trim end if needed
+    if(outStr.endsWith(', ')) {
+        outStr = outStr.slice(0, -2);
+    }
+    if(outStr.endsWith(' ')) {
+        outStr = outStr.slice(0, -1);
     }
     return outStr;
 }
@@ -143,12 +154,14 @@ function getLocation(shippingData) {
             {
                 city: latestLocation.City, 
                 stateProvince: latestLocation.StateProvinceCode, 
-                country: latestLocation.CountryCode
+                country: latestLocation.CountryCode,
+                postalCode: latestLocation.PostalCode
             } :
             {
                 city: latestLocation.Address.City,
                 stateProvince: latestLocation.Address.StateProvinceCode,
-                country: latestLocation.Address.CountryCode
+                country: latestLocation.Address.CountryCode,
+                postalCode: latestLocation.Address.PostalCode
             }
         var locationStr = getLocationString(location);
         addrObj =  {
