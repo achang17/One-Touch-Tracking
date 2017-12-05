@@ -83,9 +83,20 @@ function makeListRequest(packageName, trackNum) {
         if (httpRequest.readyState === XMLHttpRequest.DONE) {
             console.log('Status: ' + httpRequest.status);
             const data = (JSON.parse(httpRequest.response)).TrackResponse;
-            console.log(data.Shipment);
-            const reducedData = parseShippingData(packageName, trackNum, data.Shipment);
-            saveShippingData(packageName, reducedData);
+            if(data === undefined) {
+                saveShippingData(packageName, {
+                    packageName: packageName,
+                    trackingNumber: trackNum,
+                    date: { month: '00', day: '00', year: '0000', fullDate: 'n/a' },
+                    latestLocation: { fullLocation: 'n/a', mapsUrl: '' },
+                    status: 'Package not found'
+                });
+            }
+            else {
+                console.log(data.Shipment);
+                const reducedData = parseShippingData(packageName, trackNum, data.Shipment);
+                saveShippingData(packageName, reducedData);
+            }
         }
     };
     httpRequest.open("POST", corsproxy + testurl);

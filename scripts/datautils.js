@@ -190,6 +190,12 @@ function interpretStatus(shippingData) {
             alt: 'Delivered'
         };
     }
+    else if(shippingData.status === 'Package not found') {
+        outStatus = { 
+            img: '../images/notfoundmark.png',
+            alt: 'Not Found' 
+        }
+    }
     else {
         outStatus = {
             img: '../images/inprogresstruck.png',
