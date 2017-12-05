@@ -198,7 +198,3 @@ function interpretStatus(shippingData) {
     }
     return outStatus;
 }
-
-// function getProgress(shippingData) {
-
-// }
