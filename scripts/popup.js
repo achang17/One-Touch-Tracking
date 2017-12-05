@@ -89,7 +89,7 @@ function makeListRequest(packageName, trackNum) {
                     trackingNumber: trackNum,
                     date: { month: '00', day: '00', year: '0000', fullDate: 'n/a' },
                     latestLocation: { fullLocation: 'n/a', mapsUrl: '' },
-                    status: 'Package not found'
+                    status: 'Could not find tracking info'
                 });
             }
             else {

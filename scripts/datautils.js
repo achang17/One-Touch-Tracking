@@ -190,7 +190,7 @@ function interpretStatus(shippingData) {
             alt: 'Delivered'
         };
     }
-    else if(shippingData.status === 'Package not found') {
+    else if(shippingData.status === 'Could not find tracking info') {
         outStatus = { 
             img: '../images/notfoundmark.png',
             alt: 'Not Found' 
