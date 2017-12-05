@@ -126,12 +126,12 @@ function tryDisplayData(packageName) {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
             datdiv.innerHTML +=
-                '<img src="' + interpretStatus(shippingData).img + '" alt="' + 
+                '<img class="statusimg" src="' + interpretStatus(shippingData).img + '" alt="' + 
                 interpretStatus(shippingData).alt + '" height="20" width="20"> ';
-            datdiv.innerHTML += '<p>Tracking Number: ' + shippingData.trackingNumber + '</p>';
-            datdiv.innerHTML += '<p>Date Picked Up: ' + shippingData.date.fullDate + '</p>';
-            datdiv.innerHTML += '<p>Location: ' + shippingData.latestLocation.fullLocation+ '</p>';
-            datdiv.innerHTML += '<p>Status: ' + shippingData.status+ '</p>';
+            datdiv.innerHTML += '<p class="dataline">Tracking Number: ' + shippingData.trackingNumber + '</p>';
+            datdiv.innerHTML += '<p class="dataline">Date Picked Up: ' + shippingData.date.fullDate + '</p>';
+            datdiv.innerHTML += '<p class="dataline">Location: ' + shippingData.latestLocation.fullLocation+ '</p>';
+            datdiv.innerHTML += '<p class="dataline">Status: ' + shippingData.status+ '</p>';
 
         });
     });
