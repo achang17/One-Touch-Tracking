@@ -196,6 +196,12 @@ function interpretStatus(shippingData) {
             alt: 'Not Found' 
         }
     }
+    else if(shippingData.status.toLowerCase().indexOf("2nd delivery attempt") !== -1) {
+        outStatus = {
+            img: '../images/2nddeliverywarn.png',
+            alt: '2nd Delivery Attempt'
+        }
+    }
     else {
         outStatus = {
             img: '../images/inprogresstruck.png',
