@@ -158,14 +158,14 @@ function makePackageHtml(packageName) {
     // Make individual components of package DOM items
     var pkgdiv = constructPkgDiv(packageName);
     var btndiv = constructBtnDiv(packageName);
-    var logbtn = constructLogButton(packageName);
+    // var logbtn = constructLogButton(packageName);
     var mapbtn = constructMapsButton(packageName);
     var rmvbtn = constructRmvButton(packageName);
     var datdiv = constructDataDiv(packageName);
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
-    btndiv.appendChild(logbtn);
+    // btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
     return pkgdiv;
