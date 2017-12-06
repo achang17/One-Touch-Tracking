@@ -19,7 +19,9 @@
             justify-content: space-between;
         }
     </style>
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="styles/test.css">
     <link rel="stylesheet" type="text/css" href="styles/addPackage.css">
     <script src="scripts/domutils.js"></script>
@@ -31,24 +33,27 @@
 
 <body>
     <!-- FOR TESTING LOG API INFO -->
+    <h2>ONE TOUCH TRACKING</h2>
     <div id="formdiv">
         <div class="buttonline">
-            <h2>Add Package</h2>
+            <h3 class="addtitle">Add Package</h3>
             <form id="addform">
-                <h3>Name</h3>
+                <h3 class="nametitle">NAME OF PACKAGE</h3>
                 <input type="text" id="packageName" value="" placeholder="Package Name" min="0" max="100">
-                <h3>Tracking Number</h3>
+                <h3 class="tracktitle">TRACKING NUMBER</h3>
                 <input type="text" id="trackNum" value="" placeholder="Tracking Number" min="0" max="100">
                 <button class="addbutton" type="submit" value="Add+">
-                    <img height=25 width=25 src="./images/Add.png" alt="add">
-                    <div class="addbuttontext">Add+</div>
+                    <!--<img height=25 width=25 src="./images/Add.png" alt="add">-->
+                    <!--<i class="fa fa-plus-square fa-lg" aria-hidden="true"></i>-->
+                    <span class="addbuttontext">ADD TO LIST</span>
                 </button>
             </form>
         </div>
     </div>
-    <div class="buttonline">
+    <div class="buttonline listwrap">
+        <div class="pkglisttext">Package List</div>
         <button class="buttonline clearbutton" type="button" value="Clear" id="clearbtn">
-            <img height=25 width=25 src="./images/clear.png" alt="clear">
+            <img height=20 width=20 src="./images/clear.png" alt="clear">
             <div class="">Clear List</div>
         </button>
         <!--<div class="buttonline">-->

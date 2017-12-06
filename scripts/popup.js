@@ -113,7 +113,23 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         evt.preventDefault();
         var packageName = evt.target.elements.packageName.value;
         var trackNum = evt.target.elements.trackNum.value;
-        addPackage(packageName, trackNum);
+        if(packageName != '' && trackNum != '' ) {
+            addPackage(packageName, trackNum);
+            document.getElementById("errortext").remove();
+        } else {
+            if (!document.getElementById("errortext")){
+                var add = document.getElementById('formdiv');
+                var errortext = document.createElement('div');
+                errortext.id = "errortext";
+                var errorfirst = document.createElement('p');
+                errorfirst.appendChild(document.createTextNode('INVALID PACKAGE OR TRACKING NUMBER'));
+                // var errorsecond = document.createElement('p');
+                // errorsecond.appendChild(document.createTextNode('OR TRACKING NUMBER'));
+                errortext.appendChild(errorfirst);
+                // errortext.appendChild(errorsecond);
+                add.appendChild(errortext);
+            }
+        }
         addform.reset();
     });
     clearbtn.addEventListener('click', () => {

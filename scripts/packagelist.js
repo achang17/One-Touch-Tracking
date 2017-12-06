@@ -27,7 +27,7 @@ function constructPkgDiv(packageName) {
     pkgdiv.id = packageName;
     pkgdiv.className = 'package';
     pkgdiv.innerHTML =
-        '<div class="package">' +
+        '<div class="packageName">' +
             '<h4>' + packageNameClean + '</h4>' +
         '</div>';
     return pkgdiv;
@@ -143,17 +143,52 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
-            
-            datdiv.innerHTML +=
-                '<img class="statusimg" src="' + interpretStatus(shippingData).img + '" alt="' + 
-                interpretStatus(shippingData).alt + '" height="20" width="20"> ';
-            datdiv.innerHTML += '<p class="dataline">Tracking Number: ' + shippingData.trackingNumber + '</p>';
-            datdiv.innerHTML += '<p class="dataline">Date Picked Up: ' + shippingData.date.fullDate + '</p>';
-            datdiv.innerHTML += '<p class="dataline">Location: ' + shippingData.latestLocation.fullLocation+ '</p>';
-            datdiv.innerHTML += '<p class="dataline">Status: ' + shippingData.status+ '</p>';
 
+            var statusimg = document.createElement('img');
+            statusimg.className = "statusimg";
+            statusimg.setAttribute('src',interpretStatus(shippingData).img );
+            statusimg.setAttribute('alt',interpretStatus(shippingData).alt );
+            statusimg.setAttribute('height',"20");
+            statusimg.setAttribute('width', "20");
+            // datdiv.innerHTML +=
+            //     '<img class="statusimg" src="' + interpretStatus(shippingData).img + '" alt="' +
+            //     interpretStatus(shippingData).alt + '" height="20" width="20"> ';
+            datdiv.appendChild(statusimg);
+            var dropdwnbtn = document.createElement('button');
+            dropdwnbtn.className = "dropdown";
+            var dropdwnicon = document.createElement('i');
+            dropdwnicon.className = "fa fa-caret-down";
+            // dropdwnicon.id = 'dropdown';
+            dropdwnicon.setAttribute('aria-hidden',"true");
+            var packagediv = document.createElement('div');
+            packagediv.id = "dropdwn" + packageName;
+
+
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">ARRIVING </span><span class="packageinfo">' + shippingData.date.fullDate + '</span></p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">CURRENTLY </span><span class="packageinfo">' + shippingData.status+ '</span></p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">@ </span><span class="packageinfo">' + shippingData.latestLocation.fullLocation+ '</span></p>';
+
+            packagediv.innerHTML += '<p class="dataline packagedetail"><span class="packagedetail">TRACKING NUMBER: </span>' + shippingData.trackingNumber + '</p>';
+            // packagediv.innerHTML += '</div>';
+
+            dropdwnbtn.addEventListener('click', () => {
+                togglePackageDetail(packageName);
+            });
+            dropdwnbtn.appendChild(dropdwnicon);
+            datdiv.appendChild(dropdwnbtn);
+            datdiv.appendChild(packagediv);
+            // console.log(datdiv);
         });
     });
+}
+
+function togglePackageDetail(packageName) {
+    var x = document.getElementById("dropdwn" + packageName);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }
 
 function displayList() {
@@ -163,6 +198,7 @@ function displayList() {
                 pkgdiv = makePackageHtml(item); // Create and get div
                 addToView(pkgdiv); // Add package div to main view
                 tryDisplayData(item); // Display shipping data in view
+                console.log(pkgdiv)
             }
         }
     });
@@ -211,9 +247,10 @@ function addPackage(packageName, trackNum) {
     pkgdiv = makePackageHtml(packageName);
     addToView(pkgdiv);
     tryDisplayData(packageName);
-   }else{
-        //display error code
-   }
+    }
+    else {
+        datdiv.innerHTML += '<p class="dataline">Invalid</p>';
+    }
 
 }
 
