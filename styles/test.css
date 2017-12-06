@@ -25,7 +25,7 @@
 }
 
 #formdiv {
-    height: 180px;
+    height: 190px;
     min-width: 200px;
     background-color: whitesmoke;
     line-height: 1px;
@@ -36,7 +36,7 @@
 }
 
 body {
-    background-color: #ffcf7b;
+    /*background-color: #ffcf7b;*/
     line-height: 2px;
-    /*background-color: #DEBA6F;*/
+    background-color: #a7dbd8;
 }

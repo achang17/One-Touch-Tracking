@@ -122,11 +122,11 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
                 var errortext = document.createElement('div');
                 errortext.id = "errortext";
                 var errorfirst = document.createElement('p');
-                errorfirst.appendChild(document.createTextNode('INVALID NAME OF PACKAGE '));
-                var errorsecond = document.createElement('p');
-                errorsecond.appendChild(document.createTextNode('OR TRACKING NUMBER'));
+                errorfirst.appendChild(document.createTextNode('INVALID PACKAGE OR TRACKING NUMBER'));
+                // var errorsecond = document.createElement('p');
+                // errorsecond.appendChild(document.createTextNode('OR TRACKING NUMBER'));
                 errortext.appendChild(errorfirst);
-                errortext.appendChild(errorsecond);
+                // errortext.appendChild(errorsecond);
                 add.appendChild(errortext);
             }
         }
