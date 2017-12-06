@@ -1,14 +1,14 @@
-function getMessage() {
+function getMessage(phoneNum) {
     return {
         "appid":"17949",
-        "to":"+18722020536",
+        "to":phoneNum,
         "project":"OneClick",
         "signature":"58c3e1edeb26bff1aa4cddc224f81714",
     }
 }
 
-function makeListRequest() {
-    var messageData = getMessage();
+function makeMessageRequest(phoneNum) {
+    var messageData = getMessage(phoneNum);
     const corsproxy = "https://cors-anywhere.herokuapp.com/";
     const messageurl = "https://api.mysubmail.com/internationalsms/xsend.json";
     var httpRequest = new XMLHttpRequest();
@@ -25,4 +25,5 @@ function makeListRequest() {
     httpRequest.open("POST", corsproxy+messageurl);
     httpRequest.setRequestHeader("Content-Type", "application/json");
     httpRequest.send(JSON.stringify(messageData));
+
 }
