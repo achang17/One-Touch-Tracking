@@ -4,31 +4,44 @@
     background: none;
     padding-left: 5px;
     margin: auto;
+    position: absolute;
+    top: 135px;
+    right:10%;
 }
 
 h2 {
-    color: #e67900;
-    font-family: "Arial";
+    font-family: "Amatic SC", serif;
+    font-size: 36px;
 }
 
 h3 {
     font-family: "Arial";
-    font-size: 18px;
+    font-size: 13px;
 }
 
 #trackNum {
-    margin-top: 0;
+    position: absolute;
+    top: 110px;
+    left: 3%;
+}
+
+#packageName {
+    position: absolute;
+    top: 60px;
+    left: 3%;
 }
 
 h4 {
+    padding: 0;
     color: #dc6303;
-    font-size: 18px;
+    font-size: 20px;
     font-family: "Arial";
 }
 
 .rmvbtn {
     padding: 0;
     border: none;
+    background: none;
     padding-left: 20%;
     margin: auto;
 }
@@ -36,16 +49,11 @@ h4 {
 .mapbtn {
     padding: 0;
     border: none;
+    background: none;
     padding-left: 10%;
     margin: auto;
 }
 
-.logbtn {
-    height: 25px;
-    width: 25px;
-    padding-left: 5px;
-    margin: auto;
-}
 
 p {
     font-family: "sans-serif";
@@ -67,6 +75,113 @@ p {
 }
 
 .clearbutton {
-    padding: 0;
+    position: absolute;
+    left: 75%;
+    padding-top: 2%;
+    background: none;
     border: none;
 }
+
+.dropdown {
+    position: absolute;
+    right: 3%;
+    top: -37px;
+}
+
+.datdiv {
+    position: relative;
+}
+
+.package {
+    border-radius: 25px;
+    padding-top: -1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    background-color: white;
+    border: 1px solid;
+    /*padding: 10px;*/
+    line-height: 5px;
+    box-shadow: 5px 5px #888888;
+    position: relative;
+}
+
+.packageName{
+    padding-left: 30px;
+    margin: 0;
+}
+
+.packagedetail {
+    font-size: 10px;
+    font-family: 'Quicksand', serif;
+}
+
+.statusimg {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top: -37px;
+}
+
+.addtitle {
+    position: absolute;
+    left: 5%;
+    font-size: 20px;
+    color: #5ab35a;
+    top: 0;
+}
+
+.nametitle {
+    position: absolute;
+    top: 35px;
+    left: 5%;
+    font-family: 'Quicksand', serif;
+    font-size: 10px;
+}
+
+.tracktitle {
+    position: absolute;
+    top: 85px;
+    left: 5%;
+    font-family: 'Quicksand', serif;
+    font-size: 10px;
+}
+
+.listwrap {
+    position: relative;
+}
+.pkglisttext {
+    position: absolute;
+    top: 20px;;
+    left: 5%;
+    font-size: 20px;
+}
+
+.packageinfo {
+    font-size: 15px;
+    font-family: 'Quicksand', serif;
+}
+
+#outdiv {
+    padding-top: 40px;
+}
+
+.dataline {
+    padding-left: 3px;
+}
+
+input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    font-size: 15px;
+}
+
+input::-webkit-input-placeholder {
+    color: lightgrey; /*Change the placeholder color*/
+    opacity: 0.8; /*Change the opacity between 0 and 1*/
+}
+
+
