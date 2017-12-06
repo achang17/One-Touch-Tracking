@@ -3,6 +3,7 @@ function getMessage(phoneNum) {
         "appid":"17949",
         "to":phoneNum,
         "project":"OneClick",
+        "key":"YOUR PACAKGE IS DELIVERED",
         "signature":"58c3e1edeb26bff1aa4cddc224f81714",
     }
 }
