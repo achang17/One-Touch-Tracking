@@ -71,8 +71,8 @@ function constructLogButton(packageName) {
  */
 function constructMapsButton(packageName) {
     var mapimg = document.createElement('img');
-    mapimg.setAttribute('height',25);
-    mapimg.setAttribute('width',25);
+    mapimg.setAttribute('height',30);
+    mapimg.setAttribute('width',30);
     mapimg.setAttribute('src',"./images/map_icon.png");
     var maptext = document.createElement('div');
     var maptextnode = document.createTextNode("Location");
@@ -100,8 +100,8 @@ function constructMapsButton(packageName) {
  */
 function constructRmvButton(packageName) {
     var rmvimg = document.createElement('img');
-    rmvimg.setAttribute('height',25);
-    rmvimg.setAttribute('width',25);
+    rmvimg.setAttribute('height',30);
+    rmvimg.setAttribute('width',30);
     rmvimg.setAttribute('src',"./images/deleteicon.png");
     var rmvtext = document.createElement('div');
     var rmvtextnode = document.createTextNode("Delete");
@@ -143,6 +143,7 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
+            
             datdiv.innerHTML +=
                 '<img class="statusimg" src="' + interpretStatus(shippingData).img + '" alt="' + 
                 interpretStatus(shippingData).alt + '" height="20" width="20"> ';
@@ -201,16 +202,21 @@ function makePackageHtml(packageName) {
  * @param {string} trackNum tracking number for new package
  */
 function addPackage(packageName, trackNum) {
-    if(packageName.includes(' ')) {
+    if(packageName != '' && trackNum != '') {
         packageName = formatPackageName(packageName);
-    }
+    
     // UPS API call to get tracking data
     makeListRequest(packageName, trackNum);
     // Add html component dynamically
     pkgdiv = makePackageHtml(packageName);
     addToView(pkgdiv);
     tryDisplayData(packageName);
+   }else{
+        //display error code
+   }
+
 }
+
 
 /**
  * Creates input button/icon for SMS/Email alerts
@@ -219,8 +225,8 @@ function addPackage(packageName, trackNum) {
  */
  function constructSMSButton(packageName){
     var smsimg = document.createElement('img');
-    smsimg.setAttribute('height',25);
-    smsimg.setAttribute('width',25);
+    smsimg.setAttribute('height',30);
+    smsimg.setAttribute('width',30);
     smsimg.setAttribute('src', "https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Chat2-128.png");
     
     var smstext = document.createElement('div');
@@ -238,12 +244,46 @@ function addPackage(packageName, trackNum) {
     
     //request a text on click
     smsbtn.addEventListener('click', () => {
-        makeMessageRequest();
+        //make request to text
+        //makeMessageRequest();
+
+        if(!document.getElementById("textdivID")){
+            var textdiv = document.createElement('div');
+            var phonebtn = document.createElement('button');
+            var phoneInput = document.createElement('input');
+            phoneInput.id = "phoneID";
+            textdiv.id = "textdivID";
+
+            phonebtn.appendChild(document.createTextNode("SEND"));
+
+            textdiv.appendChild(phoneInput);
+            textdiv.appendChild(phonebtn);
+
+
+            document.getElementById(packageName).appendChild(textdiv);
+
+            phonebtn.addEventListener('click', () =>{
+                if(phoneInput.value){
+                    document.getElementById("textdivID").remove();
+                }
+            });
+
+        }
+        else {
+            document.getElementById("textdivID").remove();
+        }
+
+
     });
 
     return smsbtn;
 
  }
+
+
+
+
+
 
 
 
