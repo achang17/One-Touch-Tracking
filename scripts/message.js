@@ -1,28 +1,36 @@
-function getMessage(phoneNum, packageName) {
-    return {
-        "appid":"17949",
-        "to":phoneNum,
-        "project":"OneClick",
-        "key":"YOUR PACAKGE: " + packageName + " IS DELIVERED",
-        "signature":"58c3e1edeb26bff1aa4cddc224f81714",
-    }
-}
 
-function makeMessageRequest(phoneNum, packageName) {
-    var messageData = getMessage(phoneNum, packageName);
-    const corsproxy = "https://cors-anywhere.herokuapp.com/";
-    const messageurl = "https://api.mysubmail.com/internationalsms/xsend.json";
+function makeMessageRequest() {
+    
+    var form = new FormData();
+    form.append("appid", "60153");
+    form.append("to", "+18722020536");
+    form.append("project", "lUwXU2");
+    form.append("signature", "b647f1329f0fcbbf31d19ed0bf0addf9");
+    
+    var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://api.mysubmail.com/internationalsms/xsend",
+    "method": "POST",
+    "headers": {
+    "cache-control": "no-cache",
+    "postman-token": "0f78989d-310f-7e4a-e328-7fd14ded796d"
+    },
+    "processData": false,
+    "contentType": false,
+    "mimeType": "multipart/form-data",
+    "data": form
+    }
+    
+    $.ajax(settings).done(function (response) {
+    console.log(response);
+    });
+    
+/*
     var httpRequest = new XMLHttpRequest();
 
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-        console.log('Status: ' + httpRequest.status);
-        console.log(httpRequest.response);
-        }
-        else {
-            console.log(httpRequest.readyState);
-        }
-    httpRequest.open("POST", corsproxy+messageurl);
-    httpRequest.setRequestHeader("Content-Type", "application/json");
-    httpRequest.send(JSON.stringify(messageData));
-
+    httpRequest.open("POST", "https://api.mysubmail.com/internationalsms/xsend");
+    //httpRequest.setRequestHeader("Content-Type", "application/json");
+    httpRequest.send(form);
+*/
 }
