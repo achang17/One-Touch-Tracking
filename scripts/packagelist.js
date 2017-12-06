@@ -93,6 +93,28 @@ function constructMapsButton(packageName) {
     return mapbtn;
 }
 
+function constructMessageButton(packageName,phoneNum) {
+    var messageimg = document.createElement('img');
+    messageimg.setAttribute('height',25);
+    messageimg.setAttribute('width',25);
+    messageimg.setAttribute('src',"./images/message_icon.png");
+    var messagetext = document.createElement('div');
+    var messagetextnode = document.createTextNode("Send SMS");
+    messagetext.className = 'messagebtntext';
+    messagetext.appendChild(messagetextnode);
+    var messagebtn = document.createElement('button');
+    messagebtn.id = packageName + 'Message';
+    messagebtn.className = 'messagebtn';
+    messagebtn.setAttribute('type', "submit");
+    messagebtn.setAttribute('value', "Send Message");
+    messagebtn.appendChild(messageimg);
+    messagebtn.appendChild(messagetext);
+    messagebtn.addEventListener('click', () => {
+        makeMessageRequest(packageName,phoneNum);
+    });
+    return messagebtn;
+}
+
 /**
  * Construct input button for removing the package from storage and the DOM
  * 
@@ -218,7 +240,7 @@ function makePackageHtml(packageName) {
     var rmvbtn = constructRmvButton(packageName);
     var smsbtn = constructSMSButton(packageName);
     var datdiv = constructDataDiv(packageName);
-
+  
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
@@ -260,7 +282,7 @@ function addPackage(packageName, trackNum) {
  *
  * @param {string} packageNAme name to append to ID tags
  */
- function constructSMSButton(packageName){
+ function constructSMSButton(packageName, phoneNum){
     var smsimg = document.createElement('img');
     smsimg.setAttribute('height',30);
     smsimg.setAttribute('width',30);
@@ -308,6 +330,7 @@ function addPackage(packageName, trackNum) {
 
         }
         else {
+          makeMessageRequest(packageName,phoneNum);
             document.getElementById("textdivID").remove();
         }
 
