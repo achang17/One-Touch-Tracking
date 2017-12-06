@@ -232,18 +232,18 @@ input::-webkit-input-placeholder {
 
 }
 
-#textdivID {
+.textdivID {
     padding-top: 10px;
     padding-bottom: 10px;
 
 }
 
-#sendbutton {
+.sendbutton {
     margin-left: 8%;
     background: #ffca77;
     border: none;
 }
 
-#phoneID {
-    width: 65%;
+.phoneID {
+    width: 70%;
 }

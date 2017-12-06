@@ -104,6 +104,14 @@ function makeListRequest(packageName, trackNum) {
     httpRequest.send(JSON.stringify(jsonData));
 }
 
+function sleep (ms) {
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+        end = new Date().getTime();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML doc to be loaded/parsed
     var addform = document.getElementById('addform');
     var clearbtn = document.getElementById('clearbtn');
@@ -128,6 +136,16 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
                 errortext.appendChild(errorfirst);
                 // errortext.appendChild(errorsecond);
                 add.appendChild(errortext);
+            }
+            else{
+                var f = document.getElementById("errortext");
+                f.style.display = 'none';
+                sleep(2000);
+                f.style.display = '';
+                // setInterval(function() {
+                //
+                //     f.style.display = (f.style.display == 'none' ? '' : 'none');
+                // }, 1000);
             }
         }
         addform.reset();

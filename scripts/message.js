@@ -4,7 +4,8 @@ function makeMessageRequest(packageName,phoneNum) {
     var form = new FormData();
     form.append("appid", "60153");
     form.append("to", phoneNum);
-    form.append("content", "[One Touch Tracking] YOU PACKAGE \"" +packageName+ "\" IS DELIVERED, PLEASE CHECK YOUR MAILBOX.");
+    // form.append("content", "[One Touch Tracking] YOU PACKAGE \"" +packageName+ "\" IS DELIVERED, PLEASE CHECK YOUR MAILBOX.");
+    form.append("project", "lUwXU2");
     form.append("signature", "b647f1329f0fcbbf31d19ed0bf0addf9");
     
     var settings = {

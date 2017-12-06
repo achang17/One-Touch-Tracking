@@ -26,7 +26,7 @@
 
 #formdiv {
     height: 190px;
-    min-width: 200px;
+    min-width: 255px;
     background-color: whitesmoke;
     line-height: 1px;
     position: relative;

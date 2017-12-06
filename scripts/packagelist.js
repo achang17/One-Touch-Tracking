@@ -280,9 +280,9 @@ function addPackage(packageName, trackNum) {
 /**
  * Creates input button/icon for SMS/Email alerts
  *
- * @param {string} packageNAme name to append to ID tags
+ * @param {string} packageName name to append to ID tags
  */
- function constructSMSButton(packageName, phoneNum){
+ function constructSMSButton(packageName){
     var smsimg = document.createElement('img');
     smsimg.setAttribute('height',30);
     smsimg.setAttribute('width',30);
@@ -306,14 +306,17 @@ function addPackage(packageName, trackNum) {
         //make request to text
         //makeMessageRequest();
 
-        if(!document.getElementById("textdivID")){
+        if(!document.getElementById("textdivID"+packageName)){
             var textdiv = document.createElement('div');
             var phonebtn = document.createElement('button');
             var phoneInput = document.createElement('input');
-            phoneInput.id = "phoneID";
-            phoneInput.setAttribute('placeholder', "Phone Number");
-            textdiv.id = "textdivID";
-            phonebtn.id="sendbutton";
+            phoneInput.id = "phoneID" + packageName;
+            phoneInput.className = "phoneID";
+            phoneInput.setAttribute('placeholder', "+1(###)-###-####");
+            textdiv.id = "textdivID" + packageName;
+            textdiv.className = "textdivID";
+            phonebtn.id="sendbutton" + packageName;
+            phonebtn.className="sendbutton";
             phonebtn.appendChild(document.createTextNode("SEND"));
 
             textdiv.appendChild(phoneInput);
@@ -324,14 +327,15 @@ function addPackage(packageName, trackNum) {
 
             phonebtn.addEventListener('click', () =>{
                 if(phoneInput.value){
-                    document.getElementById("textdivID").remove();
+                    makeMessageRequest(packageName,phoneInput.value);
+                    document.getElementById("textdivID"+packageName).remove();
                 }
             });
 
         }
         else {
-          makeMessageRequest(packageName,phoneNum);
-            document.getElementById("textdivID").remove();
+
+            document.getElementById("textdivID"+packageName).remove();
         }
 
 
