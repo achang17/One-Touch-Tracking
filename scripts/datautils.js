@@ -1,3 +1,4 @@
+
 /**
  * Parses shipping data from API and reduces it to necessary parts
  * 

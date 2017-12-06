@@ -93,7 +93,7 @@ function constructMapsButton(packageName) {
     return mapbtn;
 }
 
-function constructMessageButton(packageName) {
+function constructMessageButton(packageName,phoneNum) {
     var messageimg = document.createElement('img');
     messageimg.setAttribute('height',25);
     messageimg.setAttribute('width',25);
@@ -110,7 +110,7 @@ function constructMessageButton(packageName) {
     messagebtn.appendChild(messageimg);
     messagebtn.appendChild(messagetext);
     messagebtn.addEventListener('click', () => {
-        makeMessageRequest();
+        makeMessageRequest(packageName,phoneNum);
     });
     return messagebtn;
 }
@@ -202,7 +202,7 @@ function makePackageHtml(packageName) {
     var mapbtn = constructMapsButton(packageName);
     var rmvbtn = constructRmvButton(packageName);
     var datdiv = constructDataDiv(packageName);
-    var messagebtn = constructMessageButton();
+    var messagebtn = constructMessageButton(packageName,phoneNum);
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
