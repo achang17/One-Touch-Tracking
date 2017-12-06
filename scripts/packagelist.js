@@ -27,7 +27,7 @@ function constructPkgDiv(packageName) {
     pkgdiv.id = packageName;
     pkgdiv.className = 'package';
     pkgdiv.innerHTML =
-        '<div class="package">' +
+        '<div class="packageName">' +
             '<h4>' + packageNameClean + '</h4>' +
         '</div>';
     return pkgdiv;
@@ -71,8 +71,8 @@ function constructLogButton(packageName) {
  */
 function constructMapsButton(packageName) {
     var mapimg = document.createElement('img');
-    mapimg.setAttribute('height',25);
-    mapimg.setAttribute('width',25);
+    mapimg.setAttribute('height',30);
+    mapimg.setAttribute('width',30);
     mapimg.setAttribute('src',"./images/map_icon.png");
     var maptext = document.createElement('div');
     var maptextnode = document.createTextNode("Location");
@@ -122,8 +122,8 @@ function constructMessageButton(packageName,phoneNum) {
  */
 function constructRmvButton(packageName) {
     var rmvimg = document.createElement('img');
-    rmvimg.setAttribute('height',25);
-    rmvimg.setAttribute('width',25);
+    rmvimg.setAttribute('height',30);
+    rmvimg.setAttribute('width',30);
     rmvimg.setAttribute('src',"./images/deleteicon.png");
     var rmvtext = document.createElement('div');
     var rmvtextnode = document.createTextNode("Delete");
@@ -165,16 +165,52 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
-            datdiv.innerHTML +=
-                '<img class="statusimg" src="' + interpretStatus(shippingData).img + '" alt="' + 
-                interpretStatus(shippingData).alt + '" height="20" width="20"> ';
-            datdiv.innerHTML += '<p class="dataline">Tracking Number: ' + shippingData.trackingNumber + '</p>';
-            datdiv.innerHTML += '<p class="dataline">Date Picked Up: ' + shippingData.date.fullDate + '</p>';
-            datdiv.innerHTML += '<p class="dataline">Location: ' + shippingData.latestLocation.fullLocation+ '</p>';
-            datdiv.innerHTML += '<p class="dataline">Status: ' + shippingData.status+ '</p>';
 
+            var statusimg = document.createElement('img');
+            statusimg.className = "statusimg";
+            statusimg.setAttribute('src',interpretStatus(shippingData).img );
+            statusimg.setAttribute('alt',interpretStatus(shippingData).alt );
+            statusimg.setAttribute('height',"20");
+            statusimg.setAttribute('width', "20");
+            // datdiv.innerHTML +=
+            //     '<img class="statusimg" src="' + interpretStatus(shippingData).img + '" alt="' +
+            //     interpretStatus(shippingData).alt + '" height="20" width="20"> ';
+            datdiv.appendChild(statusimg);
+            var dropdwnbtn = document.createElement('button');
+            dropdwnbtn.className = "dropdown";
+            var dropdwnicon = document.createElement('i');
+            dropdwnicon.className = "fa fa-caret-down";
+            // dropdwnicon.id = 'dropdown';
+            dropdwnicon.setAttribute('aria-hidden',"true");
+            var packagediv = document.createElement('div');
+            packagediv.id = "dropdwn" + packageName;
+
+
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">ARRIVING </span><span class="packageinfo">' + shippingData.date.fullDate + '</span></p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">CURRENTLY </span><span class="packageinfo">' + shippingData.status+ '</span></p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">@ </span><span class="packageinfo">' + shippingData.latestLocation.fullLocation+ '</span></p>';
+
+            packagediv.innerHTML += '<p class="dataline packagedetail"><span class="packagedetail">TRACKING NUMBER: </span>' + shippingData.trackingNumber + '</p>';
+            // packagediv.innerHTML += '</div>';
+
+            dropdwnbtn.addEventListener('click', () => {
+                togglePackageDetail(packageName);
+            });
+            dropdwnbtn.appendChild(dropdwnicon);
+            datdiv.appendChild(dropdwnbtn);
+            datdiv.appendChild(packagediv);
+            // console.log(datdiv);
         });
     });
+}
+
+function togglePackageDetail(packageName) {
+    var x = document.getElementById("dropdwn" + packageName);
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }
 
 function displayList() {
@@ -184,6 +220,7 @@ function displayList() {
                 pkgdiv = makePackageHtml(item); // Create and get div
                 addToView(pkgdiv); // Add package div to main view
                 tryDisplayData(item); // Display shipping data in view
+                console.log(pkgdiv)
             }
         }
     });
@@ -201,15 +238,17 @@ function makePackageHtml(packageName) {
     // var logbtn = constructLogButton(packageName);
     var mapbtn = constructMapsButton(packageName);
     var rmvbtn = constructRmvButton(packageName);
+    var smsbtn = constructSMSButton(packageName);
     var datdiv = constructDataDiv(packageName);
-    var messagebtn = constructMessageButton(packageName,phoneNum);
+  
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
     // btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
-    btndiv.appendChild(messagebtn);
+    btndiv.appendChild(smsbtn);
+
     return pkgdiv;
 }
 
@@ -221,16 +260,93 @@ function makePackageHtml(packageName) {
  * @param {string} trackNum tracking number for new package
  */
 function addPackage(packageName, trackNum) {
-    if(packageName.includes(' ')) {
+    if(packageName != '' && trackNum != '') {
         packageName = formatPackageName(packageName);
-    }
+    
     // UPS API call to get tracking data
     makeListRequest(packageName, trackNum);
     // Add html component dynamically
     pkgdiv = makePackageHtml(packageName);
     addToView(pkgdiv);
     tryDisplayData(packageName);
+    }
+    else {
+        datdiv.innerHTML += '<p class="dataline">Invalid</p>';
+    }
+
 }
+
+
+/**
+ * Creates input button/icon for SMS/Email alerts
+ *
+ * @param {string} packageNAme name to append to ID tags
+ */
+ function constructSMSButton(packageName, phoneNum){
+    var smsimg = document.createElement('img');
+    smsimg.setAttribute('height',30);
+    smsimg.setAttribute('width',30);
+    smsimg.setAttribute('src', "https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Chat2-128.png");
+    
+    var smstext = document.createElement('div');
+    var smstextnode = document.createTextNode("Text Me");
+    smstext.className = 'smsbtntext';
+    smstext.appendChild(smstextnode);
+    
+    var smsbtn = document.createElement('button');
+    smsbtn.id = packageName + 'Text';
+    smsbtn.className = 'smsbtn';
+    smsbtn.setAttribute('type', "submit");
+    smsbtn.setAttribute('value', "Text Info");
+    smsbtn.appendChild(smsimg);
+    smsbtn.appendChild(smstext);
+    
+    //request a text on click
+    smsbtn.addEventListener('click', () => {
+        //make request to text
+        //makeMessageRequest();
+
+        if(!document.getElementById("textdivID")){
+            var textdiv = document.createElement('div');
+            var phonebtn = document.createElement('button');
+            var phoneInput = document.createElement('input');
+            phoneInput.id = "phoneID";
+            phoneInput.setAttribute('placeholder', "Phone Number");
+            textdiv.id = "textdivID";
+            phonebtn.id="sendbutton";
+            phonebtn.appendChild(document.createTextNode("SEND"));
+
+            textdiv.appendChild(phoneInput);
+            textdiv.appendChild(phonebtn);
+
+
+            document.getElementById(packageName).appendChild(textdiv);
+
+            phonebtn.addEventListener('click', () =>{
+                if(phoneInput.value){
+                    document.getElementById("textdivID").remove();
+                }
+            });
+
+        }
+        else {
+          makeMessageRequest(packageName,phoneNum);
+            document.getElementById("textdivID").remove();
+        }
+
+
+    });
+
+    return smsbtn;
+
+ }
+
+
+
+
+
+
+
 
 /**
  * Removes given package from the storage and also 
