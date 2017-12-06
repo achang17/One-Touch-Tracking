@@ -75,7 +75,7 @@ function constructMapsButton(packageName) {
     mapimg.setAttribute('width',25);
     mapimg.setAttribute('src',"./images/map_icon.png");
     var maptext = document.createElement('div');
-    var maptextnode = document.createTextNode("Current Location");
+    var maptextnode = document.createTextNode("Location");
     maptext.className = 'mapbtntext';
     maptext.appendChild(maptextnode);
     var mapbtn = document.createElement('button');
@@ -179,13 +179,17 @@ function makePackageHtml(packageName) {
     // var logbtn = constructLogButton(packageName);
     var mapbtn = constructMapsButton(packageName);
     var rmvbtn = constructRmvButton(packageName);
+    var smsbtn = constructSMSButton(packageName);
     var datdiv = constructDataDiv(packageName);
+
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
     // btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
+    btndiv.appendChild(smsbtn);
+
     return pkgdiv;
 }
 
@@ -207,6 +211,37 @@ function addPackage(packageName, trackNum) {
     addToView(pkgdiv);
     tryDisplayData(packageName);
 }
+
+/**
+ * Creates input button/icon for SMS/Email alerts
+ *
+ * @param {string} packageNAme name to append to ID tags
+ */
+ function constructSMSButton(packageName){
+    var smsimg = document.createElement('img');
+    smsimg.setAttribute('height',25);
+    smsimg.setAttribute('width',25);
+    smsimg.setAttribute('src', "https://cdn2.iconfinder.com/data/icons/squareplex/128/email2.png");
+    
+    var smstext = document.createElement('div');
+    var smstextnode = document.createTextNode("Text Me");
+    smstext.className = 'smsbtntext';
+    smstext.appendChild(smstextnode);
+    
+    var smsbtn = document.createElement('button');
+    smsbtn.id = packageName + 'Text';
+    smsbtn.className = 'smsbtn';
+    smsbtn.setAttribute('type', "submit");
+    smsbtn.setAttribute('value', "Text Info");
+    smsbtn.appendChild(smsimg);
+    smsbtn.appendChild(smstext);
+    
+
+    return smsbtn;
+
+ }
+
+
 
 /**
  * Removes given package from the storage and also 
