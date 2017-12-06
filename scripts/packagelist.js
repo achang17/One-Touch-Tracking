@@ -221,7 +221,7 @@ function addPackage(packageName, trackNum) {
     var smsimg = document.createElement('img');
     smsimg.setAttribute('height',25);
     smsimg.setAttribute('width',25);
-    smsimg.setAttribute('src', "https://cdn2.iconfinder.com/data/icons/squareplex/128/email2.png");
+    smsimg.setAttribute('src', "https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Chat2-128.png");
     
     var smstext = document.createElement('div');
     var smstextnode = document.createTextNode("Text Me");
