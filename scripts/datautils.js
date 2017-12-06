@@ -193,7 +193,7 @@ function interpretStatus(shippingData) {
     }
     else if(shippingData.status === 'Could not find tracking info') {
         outStatus = { 
-            img: '../images/notfoundmark.png',
+            img: '../images/2nddeliverywarn.png',
             alt: 'Not Found' 
         }
     }
