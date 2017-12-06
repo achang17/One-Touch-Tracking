@@ -1,6 +1,7 @@
 .addbutton{
-    height: 25px;
-    width: 25px;
+    padding: 0;
+    border: none;
+    background: none;
     padding-left: 5px;
     margin: auto;
 }
@@ -26,16 +27,16 @@ h4 {
 }
 
 .rmvbtn {
-    height: 25px;
-    width: 25px;
-    padding-left: 30%;
+    padding: 0;
+    border: none;
+    padding-left: 20%;
     margin: auto;
 }
 
 .mapbtn {
-    height: 25px;
-    width: 25px;
-    padding-left: 30%;
+    padding: 0;
+    border: none;
+    padding-left: 10%;
     margin: auto;
 }
 
@@ -48,4 +49,19 @@ h4 {
 
 p {
     font-family: "sans-serif";
+}
+
+.addbuttontext {
+    margin: auto;
+    color: #2dca44;
+}
+
+.mapbtntext {
+    margin: auto;
+    color: #dc6303;
+}
+
+.rmvbtntext {
+    margin: auto;
+    color: #dc6303;
 }

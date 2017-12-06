@@ -70,12 +70,21 @@ function constructLogButton(packageName) {
  * @param {string} packageName name to append to ID tags
  */
 function constructMapsButton(packageName) {
-    var mapbtn = document.createElement('input');
+    var mapimg = document.createElement('img');
+    mapimg.setAttribute('height',25);
+    mapimg.setAttribute('width',25);
+    mapimg.setAttribute('src',"./images/map_icon.png");
+    var maptext = document.createElement('div');
+    var maptextnode = document.createTextNode("Current Location");
+    maptext.className = 'mapbtntext';
+    maptext.appendChild(maptextnode);
+    var mapbtn = document.createElement('button');
     mapbtn.id = packageName + 'Maps';
     mapbtn.className = 'mapbtn';
-    mapbtn.setAttribute('type', "image");
+    mapbtn.setAttribute('type', "submit");
     mapbtn.setAttribute('value', "Show Location");
-    mapbtn.setAttribute('src', "https://freeiconshop.com/wp-content/uploads/edd/location-map-flat.png");
+    mapbtn.appendChild(mapimg);
+    mapbtn.appendChild(maptext);
     mapbtn.addEventListener('click', () => {
         getShippingData(packageName, (shippingData) => {
             chrome.tabs.create({url: shippingData.latestLocation.mapsUrl});
@@ -90,12 +99,21 @@ function constructMapsButton(packageName) {
  * @param {string} packageName name to append to ID tags
  */
 function constructRmvButton(packageName) {
-    var rmvbtn = document.createElement('input');
+    var rmvimg = document.createElement('img');
+    rmvimg.setAttribute('height',25);
+    rmvimg.setAttribute('width',25);
+    rmvimg.setAttribute('src',"./images/deleteicon.png");
+    var rmvtext = document.createElement('div');
+    var rmvtextnode = document.createTextNode("Delete");
+    rmvtext.className = 'rmvbtntext';
+    rmvtext.appendChild(rmvtextnode);
+    var rmvbtn = document.createElement('button');
     rmvbtn.id = packageName + 'Remove';
     rmvbtn.className = 'rmvbtn';
-    rmvbtn.setAttribute('type', "image");
+    rmvbtn.setAttribute('type', "submit");
     rmvbtn.setAttribute('value', "Remove Package");
-    rmvbtn.setAttribute('src', "http://icons.iconarchive.com/icons/custom-icon-design/flatastic-4/128/Package-delete-icon.png")
+    rmvbtn.appendChild(rmvimg);
+    rmvbtn.appendChild(rmvtext);
     rmvbtn.addEventListener('click', () => {
         removePackage(packageName);
     });
