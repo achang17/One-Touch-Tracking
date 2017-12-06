@@ -27,7 +27,7 @@ function constructPkgDiv(packageName) {
     pkgdiv.id = packageName;
     pkgdiv.className = 'package';
     pkgdiv.innerHTML =
-        '<div>' +
+        '<div class="packageName">' +
             '<h4>' + packageNameClean + '</h4>' +
         '</div>';
     return pkgdiv;
