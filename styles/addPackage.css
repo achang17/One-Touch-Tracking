@@ -44,6 +44,15 @@ h4 {
     font-family: "Arial";
 }
 
+.smsbtn {
+    padding: 0;
+    border: none;
+    left: 30%;
+    position: relative;
+    margin: auto;
+}
+
+
 .rmvbtn {
     padding: 0;
     border: none;
@@ -81,6 +90,11 @@ p {
 }
 
 .rmvbtntext {
+    margin: auto;
+    color: #dc6303;
+}
+
+.smsbtntext {
     margin: auto;
     color: #dc6303;
 }

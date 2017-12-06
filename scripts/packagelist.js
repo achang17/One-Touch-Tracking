@@ -71,11 +71,11 @@ function constructLogButton(packageName) {
  */
 function constructMapsButton(packageName) {
     var mapimg = document.createElement('img');
-    mapimg.setAttribute('height',25);
-    mapimg.setAttribute('width',25);
+    mapimg.setAttribute('height',30);
+    mapimg.setAttribute('width',30);
     mapimg.setAttribute('src',"./images/map_icon.png");
     var maptext = document.createElement('div');
-    var maptextnode = document.createTextNode("Current Location");
+    var maptextnode = document.createTextNode("Location");
     maptext.className = 'mapbtntext';
     maptext.appendChild(maptextnode);
     var mapbtn = document.createElement('button');
@@ -100,8 +100,8 @@ function constructMapsButton(packageName) {
  */
 function constructRmvButton(packageName) {
     var rmvimg = document.createElement('img');
-    rmvimg.setAttribute('height',25);
-    rmvimg.setAttribute('width',25);
+    rmvimg.setAttribute('height',30);
+    rmvimg.setAttribute('width',30);
     rmvimg.setAttribute('src',"./images/deleteicon.png");
     var rmvtext = document.createElement('div');
     var rmvtextnode = document.createTextNode("Delete");
@@ -143,6 +143,7 @@ function tryDisplayData(packageName) {
     afterLoad(packageName + 'Data', (datdiv) => {
         getAfterSave(packageName, (shippingData) => {
             console.log('GOT DATA!');
+
             var statusimg = document.createElement('img');
             statusimg.className = "statusimg";
             statusimg.setAttribute('src',interpretStatus(shippingData).img );
@@ -161,6 +162,7 @@ function tryDisplayData(packageName) {
             dropdwnicon.setAttribute('aria-hidden',"true");
             var packagediv = document.createElement('div');
             packagediv.id = "dropdwn" + packageName;
+
 
             packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">ARRIVING </span><span class="packageinfo">' + shippingData.date.fullDate + '</span></p>';
             packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">CURRENTLY </span><span class="packageinfo">' + shippingData.status+ '</span></p>';
@@ -214,13 +216,17 @@ function makePackageHtml(packageName) {
     // var logbtn = constructLogButton(packageName);
     var mapbtn = constructMapsButton(packageName);
     var rmvbtn = constructRmvButton(packageName);
+    var smsbtn = constructSMSButton(packageName);
     var datdiv = constructDataDiv(packageName);
+
     // Add components into main package div
     pkgdiv.appendChild(datdiv);
     pkgdiv.appendChild(btndiv);
     // btndiv.appendChild(logbtn);
     btndiv.appendChild(mapbtn);
     btndiv.appendChild(rmvbtn);
+    btndiv.appendChild(smsbtn);
+
     return pkgdiv;
 }
 
@@ -245,7 +251,78 @@ function addPackage(packageName, trackNum) {
     else {
         datdiv.innerHTML += '<p class="dataline">Invalid</p>';
     }
+
 }
+
+
+/**
+ * Creates input button/icon for SMS/Email alerts
+ *
+ * @param {string} packageNAme name to append to ID tags
+ */
+ function constructSMSButton(packageName){
+    var smsimg = document.createElement('img');
+    smsimg.setAttribute('height',30);
+    smsimg.setAttribute('width',30);
+    smsimg.setAttribute('src', "https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Chat2-128.png");
+    
+    var smstext = document.createElement('div');
+    var smstextnode = document.createTextNode("Text Me");
+    smstext.className = 'smsbtntext';
+    smstext.appendChild(smstextnode);
+    
+    var smsbtn = document.createElement('button');
+    smsbtn.id = packageName + 'Text';
+    smsbtn.className = 'smsbtn';
+    smsbtn.setAttribute('type', "submit");
+    smsbtn.setAttribute('value', "Text Info");
+    smsbtn.appendChild(smsimg);
+    smsbtn.appendChild(smstext);
+    
+    //request a text on click
+    smsbtn.addEventListener('click', () => {
+        //make request to text
+        //makeMessageRequest();
+
+        if(!document.getElementById("textdivID")){
+            var textdiv = document.createElement('div');
+            var phonebtn = document.createElement('button');
+            var phoneInput = document.createElement('input');
+            phoneInput.id = "phoneID";
+            textdiv.id = "textdivID";
+
+            phonebtn.appendChild(document.createTextNode("SEND"));
+
+            textdiv.appendChild(phoneInput);
+            textdiv.appendChild(phonebtn);
+
+
+            document.getElementById(packageName).appendChild(textdiv);
+
+            phonebtn.addEventListener('click', () =>{
+                if(phoneInput.value){
+                    document.getElementById("textdivID").remove();
+                }
+            });
+
+        }
+        else {
+            document.getElementById("textdivID").remove();
+        }
+
+
+    });
+
+    return smsbtn;
+
+ }
+
+
+
+
+
+
+
 
 /**
  * Removes given package from the storage and also 
