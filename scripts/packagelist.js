@@ -236,6 +236,10 @@ function addPackage(packageName, trackNum) {
     smsbtn.appendChild(smsimg);
     smsbtn.appendChild(smstext);
     
+    //request a text on click
+    smsbtn.addEventListener('click', () => {
+        makeMessageRequest();
+    });
 
     return smsbtn;
 
