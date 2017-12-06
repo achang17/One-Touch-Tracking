@@ -121,8 +121,12 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
                 var add = document.getElementById('formdiv');
                 var errortext = document.createElement('div');
                 errortext.id = "errortext";
-                var message = document.createTextNode('INVALID NAME OF PACKAGE OR TRACKING NUMBER');
-                errortext.appendChild(message);
+                var errorfirst = document.createElement('p');
+                errorfirst.appendChild(document.createTextNode('INVALID NAME OF PACKAGE '));
+                var errorsecond = document.createElement('p');
+                errorsecond.appendChild(document.createTextNode('OR TRACKING NUMBER'));
+                errortext.appendChild(errorfirst);
+                errortext.appendChild(errorsecond);
                 add.appendChild(errortext);
             }
         }

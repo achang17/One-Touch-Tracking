@@ -156,6 +156,7 @@ p {
     top: 20px;;
     left: 5%;
     font-size: 20px;
+    font-weight: bold;
 }
 
 .packageinfo {
@@ -184,4 +185,15 @@ input::-webkit-input-placeholder {
     opacity: 0.8; /*Change the opacity between 0 and 1*/
 }
 
+#errortext {
+    color: red;
+    position: absolute;
+    top: 135px;
+    left: 5%;
+}
+
+#errortext p {
+    font-family: 'Quicksand', serif;
+
+}
 
