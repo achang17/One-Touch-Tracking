@@ -93,6 +93,28 @@ function constructMapsButton(packageName) {
     return mapbtn;
 }
 
+function constructMessageButton(phoneNum, packageName) {
+    var messageimg = document.createElement('img');
+    messageimg.setAttribute('height',25);
+    messageimg.setAttribute('width',25);
+    messageimg.setAttribute('src',"./images/message_icon.png");
+    var messagetext = document.createElement('div');
+    var messagetextnode = document.createTextNode("Send SMS");
+    messagetext.className = 'messagebtntext';
+    messagetext.appendChild(messagetextnode);
+    var messagebtn = document.createElement('button');
+    messagebtn.id = packageName + 'Maps';
+    messagebtn.className = 'messagebtn';
+    messagebtn.setAttribute('type', "submit");
+    messagebtn.setAttribute('value', "Send Message");
+    messagebtn.appendChild(messageimg);
+    messagebtn.appendChild(messagetext);
+    messagebtn.addEventListener('click', () => {
+        makeMessageRequest(phoneNum, packageName);
+    });
+    return messagebtn;
+}
+
 /**
  * Construct input button for removing the package from storage and the DOM
  * 
