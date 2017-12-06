@@ -25,9 +25,18 @@
 }
 
 #formdiv {
-    height: 200px;
+    height: 180px;
+    min-width: 200px;
+    background-color: whitesmoke;
+    line-height: 1px;
+    position: relative;
+    border-radius: 25px;
+    box-shadow: 5px 5px #888888;
+    border: 1px solid;
 }
 
 body {
-    background-color: #e4e4e4;
+    background-color: #ffcf7b;
+    line-height: 2px;
+    /*background-color: #DEBA6F;*/
 }

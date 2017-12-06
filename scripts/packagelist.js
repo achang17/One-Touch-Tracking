@@ -162,10 +162,11 @@ function tryDisplayData(packageName) {
             var packagediv = document.createElement('div');
             packagediv.id = "dropdwn" + packageName;
 
-            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Tracking Number: </span>' + shippingData.trackingNumber + '</p>';
-            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Date Picked Up: </span>' + shippingData.date.fullDate + '</p>';
-            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Location: </span>' + shippingData.latestLocation.fullLocation+ '</p>';
-            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Status: </span>' + shippingData.status+ '</p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">ARRIVING </span><span class="packageinfo">' + shippingData.date.fullDate + '</span></p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">CURRENTLY </span><span class="packageinfo">' + shippingData.status+ '</span></p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">@ </span><span class="packageinfo">' + shippingData.latestLocation.fullLocation+ '</span></p>';
+
+            packagediv.innerHTML += '<p class="dataline packagedetail"><span class="packagedetail">TRACKING NUMBER: </span>' + shippingData.trackingNumber + '</p>';
             // packagediv.innerHTML += '</div>';
 
             dropdwnbtn.addEventListener('click', () => {
