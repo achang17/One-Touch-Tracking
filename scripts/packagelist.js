@@ -27,7 +27,7 @@ function constructPkgDiv(packageName) {
     pkgdiv.id = packageName;
     pkgdiv.className = 'package';
     pkgdiv.innerHTML =
-        '<div class="package">' +
+        '<div>' +
             '<h4>' + packageNameClean + '</h4>' +
         '</div>';
     return pkgdiv;
@@ -162,10 +162,10 @@ function tryDisplayData(packageName) {
             var packagediv = document.createElement('div');
             packagediv.id = "dropdwn" + packageName;
 
-            packagediv.innerHTML += '<p class="dataline">Tracking Number: ' + shippingData.trackingNumber + '</p>';
-            packagediv.innerHTML += '<p class="dataline">Date Picked Up: ' + shippingData.date.fullDate + '</p>';
-            packagediv.innerHTML += '<p class="dataline">Location: ' + shippingData.latestLocation.fullLocation+ '</p>';
-            packagediv.innerHTML += '<p class="dataline">Status: ' + shippingData.status+ '</p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Tracking Number: </span>' + shippingData.trackingNumber + '</p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Date Picked Up: </span>' + shippingData.date.fullDate + '</p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Location: </span>' + shippingData.latestLocation.fullLocation+ '</p>';
+            packagediv.innerHTML += '<p class="dataline"><span class="packagedetail">Status: </span>' + shippingData.status+ '</p>';
             // packagediv.innerHTML += '</div>';
 
             dropdwnbtn.addEventListener('click', () => {
@@ -174,7 +174,7 @@ function tryDisplayData(packageName) {
             dropdwnbtn.appendChild(dropdwnicon);
             datdiv.appendChild(dropdwnbtn);
             datdiv.appendChild(packagediv);
-            console.log(datdiv);
+            // console.log(datdiv);
         });
     });
 }
@@ -195,6 +195,7 @@ function displayList() {
                 pkgdiv = makePackageHtml(item); // Create and get div
                 addToView(pkgdiv); // Add package div to main view
                 tryDisplayData(item); // Display shipping data in view
+                console.log(pkgdiv)
             }
         }
     });
