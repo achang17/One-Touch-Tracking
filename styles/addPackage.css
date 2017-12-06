@@ -70,3 +70,12 @@ p {
     padding: 0;
     border: none;
 }
+
+.dropdown {
+    position: absolute;
+    right: 10px;
+}
+
+.datdiv {
+    position: relative;
+}
