@@ -289,8 +289,9 @@ function addPackage(packageName, trackNum) {
             var phonebtn = document.createElement('button');
             var phoneInput = document.createElement('input');
             phoneInput.id = "phoneID";
+            phoneInput.setAttribute('placeholder', "Phone Number");
             textdiv.id = "textdivID";
-
+            phonebtn.id="sendbutton";
             phonebtn.appendChild(document.createTextNode("SEND"));
 
             textdiv.appendChild(phoneInput);

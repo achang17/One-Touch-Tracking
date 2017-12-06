@@ -47,7 +47,8 @@ h4 {
 .smsbtn {
     padding: 0;
     border: none;
-    left: 30%;
+    background: none;
+    left: 35%;
     position: relative;
     margin: auto;
 }
@@ -57,7 +58,8 @@ h4 {
     padding: 0;
     border: none;
     background: none;
-    padding-left: 20%;
+    left: 17.5%;
+    position: relative;
     margin: auto;
 }
 
@@ -65,7 +67,8 @@ h4 {
     padding: 0;
     border: none;
     background: none;
-    padding-left: 10%;
+    left: 0;
+    position: relative;
     margin: auto;
 }
 
@@ -228,3 +231,18 @@ input::-webkit-input-placeholder {
 
 }
 
+#textdivID {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+#sendbutton {
+    margin-left: 8%;
+    background: #ffca77;
+    border: none;
+}
+
+#phoneID {
+    width: 65%;
+}
