@@ -65,3 +65,8 @@ p {
     margin: auto;
     color: #dc6303;
 }
+
+.clearbutton {
+    padding: 0;
+    border: none;
+}
