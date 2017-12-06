@@ -123,7 +123,9 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
         var trackNum = evt.target.elements.trackNum.value;
         if(packageName != '' && trackNum != '' ) {
             addPackage(packageName, trackNum);
-            document.getElementById("errortext").remove();
+            if (document.getElementById("errortext")) {
+                document.getElementById("errortext").remove();
+            }
         } else {
             if (!document.getElementById("errortext")){
                 var add = document.getElementById('formdiv');
@@ -137,16 +139,16 @@ document.addEventListener('DOMContentLoaded', () => { // waits for initial HTML 
                 // errortext.appendChild(errorsecond);
                 add.appendChild(errortext);
             }
-            else{
-                var f = document.getElementById("errortext");
-                f.style.display = 'none';
-                sleep(2000);
-                f.style.display = '';
-                // setInterval(function() {
-                //
-                //     f.style.display = (f.style.display == 'none' ? '' : 'none');
-                // }, 1000);
-            }
+            // else{
+            //     var f = document.getElementById("errortext");
+            //     f.style.display = 'none';
+            //     sleep(2000);
+            //     f.style.display = '';
+            //     // setInterval(function() {
+            //     //
+            //     //     f.style.display = (f.style.display == 'none' ? '' : 'none');
+            //     // }, 1000);
+            // }
         }
         addform.reset();
     });
