@@ -197,15 +197,19 @@ function makePackageHtml(packageName) {
  * @param {string} trackNum tracking number for new package
  */
 function addPackage(packageName, trackNum) {
-    if(packageName.includes(' ')) {
+    if(packageName != '' && trackNum != '') {
         packageName = formatPackageName(packageName);
-    }
+    
     // UPS API call to get tracking data
     makeListRequest(packageName, trackNum);
     // Add html component dynamically
     pkgdiv = makePackageHtml(packageName);
     addToView(pkgdiv);
     tryDisplayData(packageName);
+    }
+    else {
+        datdiv.innerHTML += '<p class="dataline">Invalid</p>';
+    }
 }
 
 /**
